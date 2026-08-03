@@ -66,5 +66,5 @@
     <string name="provision_scope_open_failed">Tidak dapat membuka halaman cakupan</string>
     <string name="provision_get_md_failed">## Gagal mendapatkan konten.\n- Anda dapat mengunjungi [di sini](%URL%) untuk melihat konten aslinya.\n- Atau coba [segarkan](hyperceiler://refresh) halaman ini.</string>
     <string name="provision_terms_of_use_label_use_network_china">Untuk memberikan layanan yang lebih baik kepada Anda, Anda harus membaca dan menyetujui <annotation key="user_agreement">Perjanjian Pengguna</annotation> dan <annotation key="privacy_policy">Kebijakan Privasi</annotation> sebelum Anda dapat melanjutkan menggunakan HyperCeiler. Kami akan melindungi informasi pribadi Anda sesuai dengan hukum, peraturan, dan kebijakan privasi yang berlaku.</string>
-    <string name="provision_terms_of_label_period">‎</string>
+    <string name="provision_terms_of_label_period">Periode‎</string>
 </resources>
