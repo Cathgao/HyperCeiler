@@ -24,7 +24,7 @@
     <string name="new_cta_agree_desc">使用中、より多くの機能を提供するために root/su 権限の許可を求める場合があります。アクセス許可の管理に移動すると、いつでもすべてのアクセス許可を変更できます。root/su 権限については、お使いの root/su マネージャーにアクセスして変更してください。</string>
     <string name="new_cta_app_main_purpose">システムアプリの変更</string>
     <string name="new_cta_app_all_purpose_welcome">利用規約 &amp; プライバシーポリシー</string>
-    <string name="new_cta_app_all_purpose_title">HyperCeiler へようこそ！このアプリは Xposed フレームワークを使用して動作します。このアプリを使用すると、対応アプリを乗っ取ったり改変したりしてシステムを強化することができます。ご利用中に、より多くの機能を提供するために、Root 権限を申請する場合があります。この権限は Root マネージャーからいつでも管理できます。\nHyperCeiler を引き続きご利用いただくことで、<annotation key="protocol">利用規約</annotation>および<annotation key="privacy">プライバシーポリシー</annotation>に同意したものとみなされます。</string>
+    <string name="new_cta_app_all_purpose_title">HyperCeilerへようこそ！\nこのアプリはXposedフレームワーク上で動作します。対応アプリの動作をフック・変更し、システム機能を拡張するために使用できます。\nまた、より多くの機能を提供するため、使用中にRoot権限を要求する場合があります。Root権限の管理は、いつでもお使いのRoot管理アプリから行えます。\nHyperCeilerを引き続き使用することで、<annotation key="protocol">利用規約</annotation>および<annotation key="privacy">プライバシーポリシー</annotation>に同意したものとみなされます。</string>
     <string name="new_cta_app_all_purpose_agree">同意 &amp; 続行</string>
     <string name="new_cta_app_all_purpose_reject">拒否 &amp; 終了</string>
     <!--HyperCeiler Settings/About Page-->
@@ -940,7 +940,7 @@
     <string name="aod_hyperos">常時オンディスプレイとロック画面エディター</string>
     <string name="aod_unlock_always_on_display">常時オンディスプレイの時間制限をアンロック</string>
     <string name="aod_unlock_always_on_display_more">この機能を完全に有効にするには、システム UI を再起動してください</string>
-    <string name="aod_unlock_aon">AOD Aon をアンロック</string>
+    <string name="aod_unlock_aon">AOD AONをアンロック</string>
     <!--Taplus-->
     <string name="content_extension">Taplus</string>
     <string name="content_extension_browser">サードパーティーのブラウザーを使用する</string>
@@ -1380,7 +1380,7 @@
     <string name="security_center_disable_ban">報告ボタンを削除</string>
     <string name="security_center_unlock_screen_time">消費電力の詳細データを表示</string>
     <string name="security_center_unlock_screen_time_desc">バッテリーセクションの上部に画面の消費電力情報を表示し、他のすべてのアプリの消費電力と使用時間も表示させます。</string>
-    <string name="security_center_unlock_gun_service">GUN サービスをアンロック</string>
+    <string name="security_center_unlock_gun_service">照準表示サービスの制限を無効化</string>
     <string name="security_center_remove_game_toast">ゲームターボのポップアップウィンドウを削除</string>
     <string name="security_center_disable_remove_screen_hold_on">画面の長押し削除を無効化</string>
     <string name="security_center_unlock_memc">MEMC をアンロック</string>
@@ -1428,7 +1428,7 @@
     <string name="aiasst_ai_captions">AI キャプションを強制的に有効化</string>
     <string name="aiasst_unlock_split_screen_translation">分割画面翻訳のロックを解除</string>
     <!--Barrage-->
-    <string name="barrage">Barrage</string>
+    <string name="barrage">弾幕</string>
     <string name="barrage_any_barrage">すべてのアプリが弾幕通知を使用できるようにする</string>
     <string name="barrage_global_enable">弾幕通知のグローバル使用を許可</string>
     <string name="barrage_not_touchable">弾幕通知をタッチできないようにする</string>
@@ -1662,7 +1662,7 @@
     <string name="scope_batch_request_failed">スコープの要求に失敗しました。</string>
     <string name="development_kill_loading_data">アプリリストを読み込んでいます。しばらくお待ちください。</string>
     <string name="development_kill_resource_not_ready">リソースの読み込み中です。しばらくしてからもう一度お試しください。</string>
-    <string name="development_kill_process_header">PID: Process:\n</string>
+    <string name="development_kill_process_header">PID：プロセス名:\n</string>
     <string name="development_kill_package_invalid_for_find">パッケージ名が無効であるか、存在しません。見つかりませんでした。\n\"%1$s\"</string>
     <string name="development_kill_package_invalid">パッケージ名が無効であるか、存在しません。確認してからもう一度お試しください。\n\"%1$s\"</string>
     <string name="development_kill_success_prefix">Kill 成功:\n</string>
@@ -1700,7 +1700,7 @@
     <string name="home_gesture_line_double_click_desc">ジェスチャーバーをダブルタップする</string>
     <string name="home_recent_fix_card_title_padding">カードタイトル下部の余白を修正</string>
     <string name="miui_package_installer_disable_cloud_check">クラウド設定の取得をブロック</string>
-    <string name="miui_package_installer_disable_cloud_check_desc">アプリのインストール時にクラウド設定のリクエストを傍受し、空の応答を返します。これにより、読み込み速度が向上し、オフラインでのインストール制限を回避できます。</string>
+    <string name="miui_package_installer_disable_cloud_check_desc">アプリのインストール時にクラウド設定へのリクエストを傍受し、空の応答を返します。これにより、インストール速度が向上し、オフライン環境でのインストール制限を回避できます。</string>
     <string name="sogou_xiaomi_clipboard_desc">Sogou入力方式、Baidu入力方式、およびXiaomi向けにカスタマイズされた各バージョンに組み込まれているクリップボードの保存件数制限を解除します。</string>
     <string name="voiceassist">Xiaomi Hyper XiaoAi</string>
     <string name="voiceassist_remove_screen_trans_watermark">画面翻訳のAI生成ウォーターマークを削除</string>
