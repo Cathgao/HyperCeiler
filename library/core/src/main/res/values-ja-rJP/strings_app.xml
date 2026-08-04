@@ -1466,7 +1466,7 @@
     <string name="mtb_auth">MTB の認証をバイパスする</string>
     <string name="mtb_auth_desc">これはリスクの高い機能であり、これによって発生する問題は自己責任となります。ベースバンドを必ずバックアップしてください。電話アプリで *#*#MODEMTEST#*#* と入力して MTB 設定を開きます。</string>
     <!--Sogou input method-->
-    <string name="sogou_xiaomi">Sogou 入力方法</string>
+    <string name="sogou_xiaomi">Sogou 入力方式</string>
     <string name="sogou_xiaomi_clipboard">クリップボードの 150 個上限を削除</string>
     <string name="add_clipboard_clear">クリアのクリップボードボタンを追加</string>
     <!--Sim Activation Service-->
@@ -1505,7 +1505,7 @@
     <string name="various_phrase_clipboardlist">クリップボードの数と時間の制限を削除</string>
     <string name="various_phrase_clipboardlist_more">有効にした後、対応する入力方式のスコープを選択して再起動してください。</string>
     <string name="various_unlock_ime">IME の全画面表示の最適化を有効化</string>
-    <string name="various_unlock_ime_desc">対象の入力方法で、選択したスタイルに対して全画面表示の最適化を有効にします\nネイティブスタイルでは、システムフレームワークのスコープを追加でチェックする必要があります\nネイティブスタイルの選択は、Xiaomi 以外のカスタムバージョンにのみ適用されます。Xiaomi カスタムバージョンで対象の入力方式をスコープに入れると、そのキーボードが切り替え可能なリストに追加されます</string>
+    <string name="various_unlock_ime_desc">対象の入力方式で、選択したスタイルに対して全画面表示の最適化を有効にします\nネイティブスタイルでは、システムフレームワークのスコープを追加でチェックする必要があります\nネイティブスタイルの選択は、Xiaomi 以外のカスタムバージョンにのみ適用されます。Xiaomi カスタムバージョンで対象の入力方式をスコープに入れると、そのキーボードが切り替え可能なリストに追加されます</string>
     <string name="various_collapse_miui_title">システムタイトルのスタイル</string>
     <string name="various_collapse_miui_title_desc">システムアプリのトップバーのタイトルを調整します</string>
     <string name="various_disable_folder_cantuse">利用できないフォルダーの制限を無効化</string>
@@ -1707,9 +1707,9 @@
     <string name="photopicker">写真と動画</string>
     <string name="photopicker_disable_reroute">ネイティブのファイルピッカーと写真ピッカーを使用する</string>
     <string name="photopicker_disable_reroute_desc">HyperOS のギャラリーとファイルマネージャーのサービスの代わりに、Android 標準のピッカーを使用します</string>
-    <string name="various_unlock_ime_apps_desc">選択された入力方法がスコープ内にない場合、そのアプリのスコープも要求されます。</string>
+    <string name="various_unlock_ime_apps_desc">選択された入力方式がスコープ内にない場合、そのアプリのスコープも要求されます。</string>
     <string name="various_unlock_ime_show_all">すべての入力方式を表示</string>
-    <string name="various_unlock_ime_show_all_desc">一部の入力方法はインストール済みのアプリリストを照会できないため、入力方式の切り替え画面で正しく表示されない場合があります。\nこの機能を有効にするには、「システムフレームワーク」のスコープが必要となり、パフォーマンスに影響を与える可能性があります。有効にする際は十分にご注意ください。</string>
+    <string name="various_unlock_ime_show_all_desc">一部の入力方式はインストール済みのアプリリストを照会できないため、入力方式の切り替え画面で正しく表示されない場合があります。\nこの機能を有効にするには、「システムフレームワーク」のスコープが必要となり、パフォーマンスに影響を与える可能性があります。有効にする際は十分にご注意ください。</string>
     <string name="various_unlock_ime_style_miui">MIUI スタイル</string>
     <string name="various_unlock_ime_style_aosp">AOSP スタイル</string>
     <string name="various_aosp_ime_nav_bar_layout_start">左側の機能キー</string>
