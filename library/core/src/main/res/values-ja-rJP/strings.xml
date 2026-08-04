@@ -44,7 +44,7 @@
     <string name="warn">警告</string>
     <string name="module_title_1">基本的なメッセージ</string>
     <string name="module_title_2">スタックメッセージ</string>
-    <string name="app_error_desc">HyperCeiler が予期せず閉じられました。この問題を解決するために、以下の情報を入力してください:\n\nメッセージを長押ししてすべてをコピーします。</string>
+    <string name="app_error_desc">HyperCeiler が予期せず終了しました。この問題を解決するために、以下の情報を入力してください:\n\nメッセージを長押ししてすべてをコピーします。</string>
     <string name="safe_mode_history">例外記録の表示</string>
     <string name="safe_mode_cancel">セーフモードを無効にする</string>
     <string name="safe_mode_ok">キャンセル</string>
@@ -65,7 +65,7 @@
     <string name="error_build_time">ビルド日時</string>
     <string name="tip_default">ヒント: デフォルトのヒントはこちらです。このメッセージが出る場合は HyperCeiler に問題があることを意味します。タイムリーかつ効果的な方法で開発者に報告してください。</string>
     <string name="headtip_tip_auto_safe_mode">セーフモードでは、セキュリティを確保するために複数回クラッシュすると、いくつかのアプリのフックを解除できます。 システムフレームワークのフックスコープを実行する必要があります。セーフモードをオンにするには、システムフレームワークのスコープを確認することを強くお勧めします。</string>
-    <string name="happy_birthday_hyperceiler">今日は HyperCeiler の誕生日です！\nこの1年間のご支援ありがとうございました。今年も一緒に頑張りましょう！</string>
+    <string name="happy_birthday_hyperceiler">今日は HyperCeiler の誕生日です！\nこの 1 年間、ご支援いただきありがとうございました。今年も一緒に頑張りましょう！</string>
     <string name="headtip_tip_fuck_coolapk">今日は何の日: Sevtinge は 2022 年 7 月 14 日に重要なスピーチを行いました。</string>
     <string name="headtip_notice_dead_logger_errcode">現在のデバイスのログサービスが異常なため、HyperCeiler の機能が制限されます。正常に動作するようにログサービスを復元してください。\nエラーコード: %1$s</string>
     <string name="headtip_notice_dead_logger">現在のデバイスのログサービスが異常なため、HyperCeiler の機能が制限されます。正常に動作するようにログサービスを復元してください。</string>

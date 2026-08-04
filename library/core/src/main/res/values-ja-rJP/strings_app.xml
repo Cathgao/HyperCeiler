@@ -24,7 +24,7 @@
     <string name="new_cta_agree_desc">使用中、より多くの機能を提供するために root/su 権限の許可を求める場合があります。アクセス許可の管理に移動すると、いつでもすべてのアクセス許可を変更できます。root/su 権限については、お使いの root/su マネージャーにアクセスして変更してください。</string>
     <string name="new_cta_app_main_purpose">システムアプリの変更</string>
     <string name="new_cta_app_all_purpose_welcome">利用規約 &amp; プライバシーポリシー</string>
-    <string name="new_cta_app_all_purpose_title">HyperCeilerへようこそ！\nこのアプリはXposedフレームワーク上で動作します。対応アプリの動作をフック・変更し、システム機能を拡張するために使用できます。\nまた、より多くの機能を提供するため、使用中にRoot権限を要求する場合があります。Root権限の管理は、いつでもお使いのRoot管理アプリから行えます。\nHyperCeilerを引き続き使用することで、<annotation key="protocol">利用規約</annotation>および<annotation key="privacy">プライバシーポリシー</annotation>に同意したものとみなされます。</string>
+    <string name="new_cta_app_all_purpose_title">HyperCeiler へようこそ！このアプリは Xposed フレームワーク上で動作します。対応アプリの動作をフック・変更し、システム機能を拡張するために使用できます。また、より多くの機能を提供するため、使用中に Root 権限を要求する場合があります。Root 権限の管理は、いつでもお使いの Root マネージャーから行えます。\nHyperCeiler を引き続き使用することで、<annotation key="protocol">利用規約</annotation>および<annotation key="privacy">プライバシーポリシー</annotation>に同意したものとみなされます。</string>
     <string name="new_cta_app_all_purpose_agree">同意 &amp; 続行</string>
     <string name="new_cta_app_all_purpose_reject">拒否 &amp; 終了</string>
     <!--HyperCeiler Settings/About Page-->
@@ -146,7 +146,7 @@
     <string name="preference_on">有効</string>
     <string name="preference_off">無効</string>
     <string name="preference_enable_failed">%s を有効にできませんでした</string>
-    <string name="preference_copied">\"%1$s\" をクリップボードにコピーしました。</string>
+    <string name="preference_copied">「%1$s」をクリップボードにコピーしました。</string>
     <string name="preference_default_value_text">デフォルト</string>
     <string name="preference_dialog_color_picker_default_title">色を選択</string>
     <string name="preference_dialog_color_picker_presets">プリセットカラー</string>
@@ -371,7 +371,7 @@
     <string name="system_framework_screen_all_rotations">画面の回転</string>
     <string name="system_framework_allow_untrusted_touch">信頼されていないタッチ操作を許可</string>
     <string name="system_framework_clipboard_whitelist">アプリにバックグラウンドでのクリップボードの読み取りを許可する</string>
-    <string name="system_framework_clipboard_whitelist_desc">アプリに READ_LOGS 権限の取得を許可する</string>
+    <string name="system_framework_clipboard_whitelist_desc">アプリに READ_LOGS 権限の取得を許可します</string>
     <string name="system_framework_clipboard_whitelist_list">クリップボードをバックグラウンドで読み取りできるホワイトリスト</string>
     <string name="system_framework_clipboard_whitelist_list_desc">1 つ以上のアプリの場合は「|」の記号で区切ってください</string>
     <string name="system_framework_disable_app_link_verify">アプリのリンク検証を無効化</string>
@@ -403,11 +403,11 @@
     <string name="system_framework_other_disable_cleaner_desc">実験的な機能です。メモリ使用が異常になる可能性があります。</string>
     <string name="system_framework_other_disable_thermal_desc">リフレッシュレートとぼかし効果の制限を無効にします</string>
     <string name="system_framework_other_disable_thermal">温度制御を無効化</string>
-    <string name="system_framework_enhance_recents_visibility_desc">システムによって非表示になっている「最近使ったアプリ」画面を再び表示する</string>
+    <string name="system_framework_enhance_recents_visibility_desc">システムによって非表示になっている「最近使ったアプリ」画面を再び表示します</string>
     <string name="system_framework_enhance_recents_visibility">最近のタスクを強化する</string>
     <string name="system_framework_other_disable_gesture_monitor">ジェスチャの監視を無効にする</string>
     <string name="system_framework_other_disable_gesture_monitor_desc">CPU 負荷は軽減されますが、3 本指のスクリーンショットなどの入力関連機能やジェスチャーショートカット機能は機能しません。</string>
-    <string name="system_framework_disable_72h_verify">72時間ごとのロック画面の認証を無効化</string>
+    <string name="system_framework_disable_72h_verify">72 時間ごとのロック画面のパスワード確認を無効化</string>
     <string name="system_framework_disable_verify_can_ve_disabled">アプリ検証の無効化を許可</string>
     <string name="system_framework_allow_all_dark_mode">すべてのアプリにダークモードの使用を許可</string>
     <string name="system_framework_background_blur_supported">高度なテクスチャを強制的に有効化</string>
@@ -417,7 +417,7 @@
     <string name="system_framework_posted_clipboard">クリップボードの貼り付けのトースト通知を抑制</string>
     <string name="system_framework_allow_manage_all_notifications">すべての通知の管理を許可</string>
     <string name="system_framework_quick_screenshot">クイックスクリーンショット</string>
-    <string name="system_framework_quick_screenshot_desc">スクリーンショットの遅延を無効化</string>
+    <string name="system_framework_quick_screenshot_desc">スクリーンショットの遅延を無効にします</string>
     <string name="system_framework_disable_link_turbo_toast">LinkTurbo トーストを隠す</string>
     <string name="system_framework_allow_third_theme">サードパーティテーマの使用を許可</string>
     <string name="system_framework_allow_disable_protected_package">保護されたアプリの無効化を許可</string>
@@ -516,9 +516,9 @@
     <string name="phone_smart_dual_sim">スマートデュアル SIM をアンロック</string>
     <string name="phone_disable_remove_network_mode">ネットワークモードの削除を無効化</string>
     <string name="phone_vice_slot_volte">サブカードによる VoLTE 通話をアンロック</string>
-    <string name="phone_vice_slot_volte_desc">VoLTE 通話中に2枚目の SIM でモバイルデータを使用します</string>
+    <string name="phone_vice_slot_volte_desc">セカンダリ SIM での VoLTE 通話中に、モバイルデータ通信をセカンダリ SIM に切り替えます</string>
     <string name="phone_unlock_voice_link">Voice link をアンロック</string>
-    <string name="phone_unlock_voice_link_desc">Wi-Fi 通話に対応する一部の SIM で Voice link をアンロック</string>
+    <string name="phone_unlock_voice_link_desc">Wi-Fi 通話に対応する一部の SIM で Voice link を使用できるようにします</string>
     <!--Download management program-->
     <string name="downloads">ダウンロードマネージャー</string>
     <string name="various_fuck_xlDownload">.xlDownload フォルダの作成をブロック</string>
@@ -583,8 +583,8 @@
     <string name="system_ui_statusbar_iconmanage_mobile_network_title">二行のシグナルバー</string>
     <string name="system_ui_statusbar_iconmanage_mobile_network_icon_style">アイコンのスタイル</string>
     <string name="system_ui_statusbar_iconmanage_mobile_network_icon_size">アイコンの大きさ</string>
-    <string name="system_ui_status_bar_mobile_type_single">モバイルネットワークタイプのアイコンを別々に表示</string>
-    <string name="system_ui_status_bar_mobile_type_single_desc">モバイルネットワークタイプのアイコンが常に非表示になっているため、この機能はオフになっています</string>
+    <string name="system_ui_status_bar_mobile_type_single">移動通信システムのアイコンを別々に表示</string>
+    <string name="system_ui_status_bar_mobile_type_single_desc">移動通信システムのアイコンが常に非表示になっているため、この機能はオフになっています</string>
     <string name="system_ui_status_bar_mobile_type_left">信号の左側に表示</string>
     <string name="system_ui_status_bar_mobile_indicator">モバイルネットワークアクティビティインジケーターを非表示</string>
     <string name="system_ui_status_bar_mobile_type_custom">カスタムテキスト</string>
@@ -615,10 +615,10 @@
     <string name="system_ui_status_bar_icon_small_hd">小さな HD アイコン</string>
     <string name="system_ui_status_bar_icon_big_hd">大きな HD アイコン</string>
     <string name="system_ui_status_bar_icon_mobile_network_signal_no_card">SIM カード未挿入アイコン</string>
-    <string name="system_ui_status_bar_icon_mobile_network_hide_card_1">SIM カード1のシグナルアイコンを非表示</string>
-    <string name="system_ui_status_bar_icon_mobile_network_hide_card_2">SIM カード2のシグナルアイコンを非表示</string>
+    <string name="system_ui_status_bar_icon_mobile_network_hide_card_1">SIM カード 1 の信号アイコンを非表示</string>
+    <string name="system_ui_status_bar_icon_mobile_network_hide_card_2">SIM カード 2 の信号アイコンを非表示</string>
     <string name="system_ui_status_bar_icon_mobile_network_type">表示ロジック</string>
-    <string name="system_ui_status_bar_big_mobile_network_type">大きなネットワークタイプアイコン</string>
+    <string name="system_ui_status_bar_big_mobile_network_type">大きな通信システムアイコン</string>
     <string name="system_ui_status_bar_icon_location">位置情報</string>
     <string name="system_ui_status_bar_icon_mic">マイク</string>
     <string name="system_ui_status_bar_icon_alarm_clock">時計のアラーム</string>
@@ -648,7 +648,7 @@
     <string name="system_ui_status_bar_icon_wireless_headset">ワイヤレスヘッドセット</string>
     <string name="system_ui_status_bar_notification_icon_maximum">表示する通知アイコンの最大数</string>
     <string name="system_ui_status_bar_battery_percent">バッテリー残量を非表示</string>
-    <string name="system_ui_status_bar_battery_percent_mark">バッテリー残量の%を非表示</string>
+    <string name="system_ui_status_bar_battery_percent_mark">バッテリー残量のパーセントを非表示</string>
     <string name="system_ui_status_bar_battery_charging">充電中のインジケーターを非表示</string>
     <string name="system_ui_status_bar_battery_icon">バッテリーアイコンを非表示</string>
     <string name="system_ui_status_bar_battery_style_title">バッテリーのカスタマイズ</string>
@@ -771,7 +771,7 @@
     <string name="system_ui_control_center_hide_edit_botton">編集ボタンを隠す</string>
     <string name="system_ui_control_center_tile_super_blur">クイック設定タイルの高度なテクスチャ設定</string>
     <string name="system_ui_control_center_mute_visible_notice">画面点灯時にミュート</string>
-    <string name="system_ui_control_center_unimportant_notification">重要度の低い通知を自動的にブロック</string>
+    <string name="system_ui_control_center_unimportant_notification">それ以前の通知を自動的にブロック</string>
     <string name="system_ui_control_center_expand_notification">通知を展開</string>
     <string name="system_ui_control_center_auto_clean_expand_notification">展開された通知を自動的に隠す</string>
     <string name="system_ui_control_center_expand_notification_show_time">表示時間</string>
@@ -940,7 +940,7 @@
     <string name="aod_hyperos">常時オンディスプレイとロック画面エディター</string>
     <string name="aod_unlock_always_on_display">常時オンディスプレイの時間制限をアンロック</string>
     <string name="aod_unlock_always_on_display_more">この機能を完全に有効にするには、システム UI を再起動してください</string>
-    <string name="aod_unlock_aon">AOD AONをアンロック</string>
+    <string name="aod_unlock_aon">AOD AON をアンロック</string>
     <!--Taplus-->
     <string name="content_extension">Taplus</string>
     <string name="content_extension_browser">サードパーティーのブラウザーを使用する</string>
@@ -1360,8 +1360,8 @@
     <string name="security_center_remove_conversation_bubble_settings_restriction">バブル通知アプリの制限を削除</string>
     <string name="security_center_remove_low_battery_reminder_title">バッテリー残量低下の警告を非表示</string>
     <string name="security_center_remove_low_battery_reminder_summary">バッテリーが 20% 未満のとき、バッテリーセーバーモードをオンにする警告ダイアログが表示されなくなります。</string>
-    <string name="security_center_remove_open_app_confirmation_popup">アプリを開いた時のポップアップを削除</string>
-    <string name="security_center_remove_open_app_confirmation_popup_summary">アプリ開始時のポップアップ、「XXXがXXXを開く事を許可する」を削除します</string>
+    <string name="security_center_remove_open_app_confirmation_popup">アプリ起動時のポップアップを削除</string>
+    <string name="security_center_remove_open_app_confirmation_popup_summary">アプリ起動時に表示される「XXX が XXX を開く事を許可する」というポップアップを削除します</string>
     <string name="security_center_no_permission">必要な権限が許可されていません</string>
     <string name="security_center_unlock_side_hide_freeform">サイド非表示フリーフォームをアンロック</string>
     <string name="security_center_unlock_side_hide_freeform_desc">サポートが制限されているデバイスのために、サイド非表示フリーフォームをアンロックします。これは、デバイスがバックグラウンドに切り替わるときのウィジェットの動作にも影響します。</string>
@@ -1428,7 +1428,7 @@
     <string name="aiasst_ai_captions">AI キャプションを強制的に有効化</string>
     <string name="aiasst_unlock_split_screen_translation">分割画面翻訳のロックを解除</string>
     <!--Barrage-->
-    <string name="barrage">弾幕</string>
+    <string name="barrage">Barrage</string>
     <string name="barrage_any_barrage">すべてのアプリが弾幕通知を使用できるようにする</string>
     <string name="barrage_global_enable">弾幕通知のグローバル使用を許可</string>
     <string name="barrage_not_touchable">弾幕通知をタッチできないようにする</string>
@@ -1484,7 +1484,7 @@
     <string name="scanner_ppt">PPT のスキャンをアンロック</string>
     <string name="scanner_doc_ppt">ファイルのスキャンをアンロック</string>
     <!--Voice Trigger-->
-    <string name="voicetrigger">音声トリガー</string>
+    <string name="voicetrigger">Voice Trigger</string>
     <string name="bypass_udk_word_legal_check_caption">インターネットなしで音声での起動の録音を許可する</string>
     <string name="bypass_udk_word_legal_check_description">オフライン時でも、音声で起動に使う単語を録音できます</string>
     <string name="voicetrigger_accuracy_percent_caption">音声での起動を検出する精度を設定する</string>
@@ -1676,24 +1676,24 @@
     <string name="rest_scope_skip_uninstalled">このデバイスにはこれらのスコープがインストールされていないため、スキップされました:\n%1$s</string>
     <string name="array_class">クラシック</string>
     <string name="status_bar_mobile_mode_on_status_bar">接続時のみ表示</string>
-    <string name="status_bar_mobile_mode_2_on_status_bar">データSIMのみ表示</string>
-    <string name="system_ui_statusbar_iconmanage_nosupport_mobile_network">モバイルネットワークの電波アイコンが現在非表示になっているため、この機能は無効です。</string>
+    <string name="status_bar_mobile_mode_2_on_status_bar">データ SIM のみ表示</string>
+    <string name="system_ui_statusbar_iconmanage_nosupport_mobile_network">モバイルネットワークの電波強度を示すアイコンが現在非表示になっているため、この機能は無効になっています</string>
     <string name="system_ui_statusbar_iconmanage_mobile_network_icon_theme">アイコンテーマ</string>
     <string name="system_ui_statusbar_iconmanage_mobile_network_icon_theme_classic">クラシック</string>
     <string name="system_ui_statusbar_iconmanage_mobile_network_icon_theme_oa">角丸</string>
-    <string name="system_ui_status_bar_icon_mobile_network_signal_mode">モバイル通信の電波表示方式</string>
-    <string name="system_ui_control_center_media_control_progress_comet">Cometプログレスバー</string>
+    <string name="system_ui_status_bar_icon_mobile_network_signal_mode">モバイル接続の電波強度アイコンの表示ロジック</string>
+    <string name="system_ui_control_center_media_control_progress_comet">彗星のプログレスバー</string>
     <string name="system_ui_control_center_media_control_progress_round">角丸プログレスバー</string>
-    <string name="system_ui_control_center_media_control_ambient_light">アンビエントライトエフェクト</string>
-    <string name="system_ui_control_center_media_control_ambient_light_desc">Dynamic Island風の音楽連動ライトエフェクトです。常にダークモードを有効にすると、より良い表示になります。\nこの機能はシステムリソースを大きく消費するため、ご注意ください。</string>
-    <string name="system_ui_control_center_media_control_ambient_light_opt">色の取得を最適化</string>
-    <string name="system_ui_control_center_media_control_ambient_light_opt_desc">Material 3のMonetカラーシステムを使用して、アンビエントライトの色抽出を最適化します。</string>
-    <string name="system_ui_control_center_media_control_always_dark">ダークモードを常に有効化</string>
-    <string name="system_ui_control_center_media_control_always_dark_desc">メディアカードを常にダークモードで表示します。</string>
-    <string name="milink_disable_pc_clipboard_region_check">PC Managerのクリップボード地域制限を無効化</string>
-    <string name="milink_disable_pc_clipboard_region_check_desc">地域設定の不一致によってPCとスマートフォン・タブレット間のクリップボード同期がブロックされる問題を修正します。</string>
+    <string name="system_ui_control_center_media_control_ambient_light">環境光効果</string>
+    <string name="system_ui_control_center_media_control_ambient_light_desc">Dynamic Island に似た、音楽に合わせて変化する照明効果です。「常にダークモード」を有効にすると、より効果的です。\nこの機能はシステムリソースを大きく消費します。使用には十分ご注意ください。</string>
+    <string name="system_ui_control_center_media_control_ambient_light_opt">色選択を最適化</string>
+    <string name="system_ui_control_center_media_control_ambient_light_opt_desc">Material 3 の Monet カラーシステムを使用して、環境光の色選択ロジックを最適化します</string>
+    <string name="system_ui_control_center_media_control_always_dark">常にダークモード</string>
+    <string name="system_ui_control_center_media_control_always_dark_desc">メディアカードを常にダークモードで表示します</string>
+    <string name="milink_disable_pc_clipboard_region_check">PC Manager クリップボードの地域制限を無効化</string>
+    <string name="milink_disable_pc_clipboard_region_check_desc">地域不一致によって PC とスマートフォンまたはタブレット間のクリップボード同期がブロックされる問題を修正します</string>
     <string name="home_navigation_predictive_progress">予測型戻るジェスチャーの進行アニメーションを修正</string>
-    <string name="home_navigation_predictive_progress_desc">実験的な機能: Xiaomi HyperOSで、一部の状況において予測型戻るジェスチャーのナビゲーションバーが短く表示される問題を修正します。</string>
+    <string name="home_navigation_predictive_progress_desc">実験的機能: Xiaomi HyperOS で、特定の状況下で予測型戻るジェスチャーのナビゲーションバーが短く表示される問題を修正します。</string>
     <string name="home_gesture_line_long_press">ジェスチャーバーの長押し</string>
     <string name="home_gesture_line_long_press_desc">ジェスチャーバーを長押しする</string>
     <string name="home_gesture_line_double_click">ジェスチャーバーをダブルタップ</string>
@@ -1701,12 +1701,12 @@
     <string name="home_recent_fix_card_title_padding">カードタイトル下部の余白を修正</string>
     <string name="miui_package_installer_disable_cloud_check">クラウド設定の取得をブロック</string>
     <string name="miui_package_installer_disable_cloud_check_desc">アプリのインストール時にクラウド設定へのリクエストを傍受し、空の応答を返します。これにより、インストール速度が向上し、オフライン環境でのインストール制限を回避できます。</string>
-    <string name="sogou_xiaomi_clipboard_desc">Sogou入力方式、Baidu入力方式、およびXiaomi向けにカスタマイズされた各バージョンに組み込まれているクリップボードの保存件数制限を解除します。</string>
+    <string name="sogou_xiaomi_clipboard_desc">Sogou 入力方式、Baidu 入力方式、および Xiaomi 向けにカスタマイズされた各バージョンに組み込まれているクリップボードの保存件数制限を解除します。</string>
     <string name="voiceassist">Xiaomi Hyper XiaoAi</string>
-    <string name="voiceassist_remove_screen_trans_watermark">画面翻訳のAI生成ウォーターマークを削除</string>
-    <string name="photopicker">写真・動画</string>
-    <string name="photopicker_disable_reroute">標準のファイル・写真選択ツールを使用</string>
-    <string name="photopicker_disable_reroute_desc">HyperOSギャラリーおよびファイルマネージャーのサービスではなく、標準の機能を使用します。</string>
+    <string name="voiceassist_remove_screen_trans_watermark">画面翻訳から AI 生成の透かしを削除</string>
+    <string name="photopicker">写真と動画</string>
+    <string name="photopicker_disable_reroute">ネイティブのファイルピッカーと写真ピッカーを使用する</string>
+    <string name="photopicker_disable_reroute_desc">HyperOS のギャラリーとファイルマネージャーのサービスの代わりに、Android 標準のピッカーを使用します</string>
     <string name="various_unlock_ime_apps_desc">選択した入力方式に必要な権限が付与されていない場合は、その権限もあわせて要求されます。</string>
     <string name="various_unlock_ime_show_all">すべての入力方式を表示</string>
     <string name="various_unlock_ime_show_all_desc">一部の入力方式は、インストール済みアプリの一覧を取得できないため、入力方式切り替え画面で正しく表示されない場合があります。\nこの機能を使用するには、System Frameworkの権限も必要です。また、パフォーマンスに影響を与える可能性があるため、注意して有効にしてください。</string>
