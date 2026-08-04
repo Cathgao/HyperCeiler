@@ -37,8 +37,8 @@
     <string name="security_center_aosp_app_manager">AOSP のアプリマネージャー項目を追加します</string>
     <string name="app_link_open_always">アプリが対応しているリンクを開くことを許可する</string>
     <string name="app_link_open_never">アプリがリンクを開くことを許可しない</string>
-    <string name="dashboard_5g">5G を使用する</string>
-    <string name="tiles_sunshine_mode">サンライトモード</string>
+    <string name="dashboard_5g">5G を使用</string>
+    <string name="tiles_sunshine_mode">日光モード</string>
     <string name="system_cc_showpct_style_1">インライン</string>
     <string name="system_cc_showpct_style_2">明示的</string>
     <string name="media_control_ground_mode_1">カバーアート</string>
@@ -73,7 +73,7 @@
     <string name="system_settings_wifi_password_dlgtitle">Wi-Fi の詳細</string>
     <!--Mi Share-->
     <string name="mishare">Xiaomi Share</string>
-    <string name="mishare_disable_mishare_auto_off">Xiaomi Share の自動無効化を無効にする</string>
+    <string name="mishare_disable_mishare_auto_off">Xiaomi Share の自動無効化を禁止</string>
     <string name="mishare_hook_switch_mode_all">全員</string>
     <!--Smart cards-->
     <string name="tsmclient">スマートカード</string>
@@ -129,8 +129,8 @@
     <string name="system_framework_guided_access_exit_lockscreen_more">ピン留めモードを終了した後、ロック画面に切り替わります</string>
     <string name="home_share_apk_failed">共有に失敗しました</string>
     <string name="home_share_apk_prepare_failed">ファイルの準備に失敗しました</string>
-    <string name="system_framework_guided_access_block_dialog">固定確認ダイアログを置き換え</string>
-    <string name="system_framework_guided_access_block_dialog_more">ダイアログを置き換えることで、予期しない問題が発生する可能性があります。</string>
+    <string name="system_framework_guided_access_block_dialog">アプリのピン留めダイアログを置換</string>
+    <string name="system_framework_guided_access_block_dialog_more">ダイアログを置き換えることで、予期しない問題が発生する可能性があります</string>
     <string name="home_share_apk_preparing">ファイルを準備しています…</string>
-    <string name="home_share_apk_preparing_split">分割APKをパッケージ化しています（%1$dファイル）…</string>
+    <string name="home_share_apk_preparing_split">分割 APK をパッケージ化しています（%1$d ファイル）…</string>
 </resources>

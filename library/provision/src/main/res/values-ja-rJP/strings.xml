@@ -27,11 +27,11 @@
     <string name="provision_agree_and_next">同意する</string>
     <string name="provision_agree_terms">利用規約とプライバシーポリシーを読んで同意しました。</string>
     <string name="provision_terms_of_use">利用規約</string>
-    <string name="provision_terms_of_use_label_use_network_china">より良いサービスを提供するため、HyperCeilerを引き続きご利用いただくには、<annotation key="user_agreement">利用規約</annotation>および<annotation key="privacy_policy">プライバシーポリシー</annotation>をご確認のうえ、ご同意いただく必要があります。お客様の個人情報は、関連する法令およびプライバシーポリシーに従って適切に保護されます。</string>
+    <string name="provision_terms_of_use_label_use_network_china">より良いサービスを提供するため、HyperCeiler を引き続きご利用いただくには、<annotation key="user_agreement">利用規約</annotation>および<annotation key="privacy_policy">プライバシーポリシー</annotation>をご確認のうえ、ご同意いただく必要があります。お客様の個人情報は、関連する法令およびプライバシーポリシーに従って適切に保護されます。</string>
     <string name="provision_protect_persoanl_info_statement">私達は、ご利用者の個人情報を関連する法令およびプライバシーポリシーに従って保護します。</string>
     <string name="provision_service_agreement">利用規約を読んで、これらに同意しました。</string>
     <string name="provision_service_name_download">ダウンロード</string>
-    <string name="provision_service_policy_download"><Data><a href="%1$s">Thunder プライバシーポリシー</a>および<a href="%2$s">Thunderネットワークサービス利用規約</a>をご確認のうえ、ご同意ください。</Data></string>
+    <string name="provision_service_policy_download"><Data><a href="%1$s">Thunder プライバシーポリシー</a>および<a href="%2$s">Thunder ネットワークサービス利用規約</a>をご確認のうえ、ご同意ください</Data></string>
     <string name="provision_congratulation_title">セットアップが完了しました</string>
     <string name="provision_congratulation_label">HyperCeiler へようこそ</string>
     <string name="provision_complete_text">HyperCeiler を使い始める</string>

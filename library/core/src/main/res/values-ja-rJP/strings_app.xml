@@ -95,7 +95,7 @@
     <string name="settings_hide_app_icon">ホーム画面のアイコン</string>
     <string name="settings_icon">設定アイコン</string>
     <string name="settings_icon_desc">システム設定でモジュールエントリの場所を設定します</string>
-    <string name="settings_icon_disable">無効化</string>
+    <string name="settings_icon_disable">無効にする</string>
     <string name="settings_icon_top">上部</string>
     <string name="settings_icon_medium">中間</string>
     <string name="settings_icon_down">下部</string>
@@ -494,8 +494,8 @@
     <string name="community_fuck_detection_desc">HyperCeiler の検出を防止し、フィードバックを行いながらアップロードしてください。不必要なトラブルを避けるため、フィードバックする前に、その問題があなたに起因するものではなく、実際のシステムの問題であることを確認してください。</string>
     <!--File Manager-->
     <string name="fileexplorer">ファイルマネージャー</string>
-    <string name="file_explorer_can_selectable">フォルダ名の長押しで選択可能にする</string>
-    <string name="file_explorer_is_single_line">フォルダ名を 1 行で表示</string>
+    <string name="file_explorer_can_selectable">フォルダー名を直接長押ししてアクションを実行できるようにする</string>
+    <string name="file_explorer_is_single_line">フォルダー名を 1 行で表示</string>
     <string name="file_explorer_unlock_file_parse">ファイル解析をアンロック</string>
     <!--Phone-->
     <string name="incallui">電話</string>
@@ -520,9 +520,9 @@
     <string name="phone_unlock_voice_link">Voice link をアンロック</string>
     <string name="phone_unlock_voice_link_desc">Wi-Fi 通話に対応する一部の SIM で Voice link を使用できるようにします</string>
     <!--Download management program-->
-    <string name="downloads">ダウンロードマネージャー</string>
-    <string name="various_fuck_xlDownload">.xlDownload フォルダの作成をブロック</string>
-    <string name="various_fuck_xlDownload_desc">ダウンロードマネージャが内部ストレージのルート上に .xlDownload フォルダを生成することを防止します</string>
+    <string name="downloads">ダウンロード</string>
+    <string name="various_fuck_xlDownload">.xlDownload フォルダーの作成をブロック</string>
+    <string name="various_fuck_xlDownload_desc">ダウンロードマネージャーが内部ストレージのルートに .xlDownload フォルダーを生成することを防止します</string>
     <!--Download UI-->
     <string name="downloads_ui">ダウンロードの UI</string>
     <string name="downloads_ui_always_show_link">常に完全なダウンロードリンクを表示する</string>
@@ -928,7 +928,7 @@
     <string name="milink_hyperos">相互接続性</string>
     <string name="milink_unlock_mishare">デバイスの相互接続をアンロック</string>
     <string name="milink_allow_camera_devices">カメラストリーミングの強制サポート</string>
-    <string name="milink_fuck_hpplay">hpplay フォルダの作成をブロック</string>
+    <string name="milink_fuck_hpplay">hpplay フォルダーの作成をブロック</string>
     <!--Sound Recorder-->
     <string name="sound_recorder">サウンドレコーダー</string>
     <string name="sound_recorder_disable_ai_watermark">AI のウォーターマークを無効化</string>
@@ -1045,9 +1045,9 @@
     <string name="home_layout_hotseats_height">高さ</string>
     <string name="home_layout_hotseats_margin_bottom_desc">画面下部余白からのドックの距離</string>
     <string name="home_layout_searchbar_margin_bottom_desc">画面下部余白と検索バーの距離</string>
-    <string name="home_folder">フォルダ</string>
-    <string name="home_small_folder_title">小さなフォルダ</string>
-    <string name="home_big_folder_title">大きなフォルダ</string>
+    <string name="home_folder">フォルダー</string>
+    <string name="home_small_folder_title">小さなフォルダー</string>
+    <string name="home_big_folder_title">大きなフォルダー</string>
     <string name="home_small_folder_icon_bg">アイコンの背景</string>
     <string name="home_small_folder_icon_bg_custom">背景をカスタムする</string>
     <string name="home_small_folder_icon_bg_size">背景のサイズ</string>
@@ -1063,12 +1063,12 @@
     <string name="home_big_folder_icon_bg_custom">カスタム</string>
     <string name="home_big_folder_icon_bg_width">背景の幅</string>
     <string name="home_big_folder_icon_bg_height">背景の高さ</string>
-    <string name="home_big_folder_item_max_count">大きなフォルダ</string>
+    <string name="home_big_folder_item_max_count">大きなフォルダー</string>
     <string name="home_big_folder_icon_bg_2x1_n">4*2 背景のカスタム</string>
     <string name="home_big_folder_icon_bg_1x2_n">2*2 背景のカスタム</string>
     <string name="home_big_folder_icon_bg_n">3*3 と 4*4 背景のカスタム</string>
     <string name="home_auto_close_folder_title">自動で閉じる</string>
-    <string name="home_auto_close_folder_summary">アプリの起動後にフォルダを自動で閉じるようにします</string>
+    <string name="home_auto_close_folder_summary">アプリの起動後にフォルダーを自動で閉じるようにします</string>
     <string name="home_wallpaper">背景</string>
     <string name="home_wallpaper_blur">背景のぼかし</string>
     <string name="home_enable_blur">開始時のぼかし</string>
@@ -1088,7 +1088,7 @@
     <string name="home_folder_space_title">余白を減らす</string>
     <string name="home_folder_blur_title">背景のぼかし</string>
     <string name="home_folder_recommend_apps_switch">「今日のおすすめ」のスイッチを隠す</string>
-    <string name="home_folder_unlock_blur_supported">フォルダのぼかし制限を削除</string>
+    <string name="home_folder_unlock_blur_supported">フォルダーのぼかし制限を削除</string>
     <string name="home_folder_unlock_blur_supported_summary">サードパーティのテーマで背景ぼかしの制限を削除します</string>
     <string name="home_folder_anim_title">リバウンドのアニメーション</string>
     <string name="home_folder_anim_1">開くスピード 1</string>
@@ -1508,7 +1508,7 @@
     <string name="various_unlock_ime_desc">対象の入力方法で、選択したスタイルに対して全画面表示の最適化を有効にします\nネイティブスタイルでは、システムフレームワークのスコープを追加でチェックする必要があります\nネイティブスタイルの選択は、Xiaomi 以外のカスタムバージョンにのみ適用されます。Xiaomi カスタムバージョンで対象の入力方式をスコープに入れると、そのキーボードが切り替え可能なリストに追加されます</string>
     <string name="various_collapse_miui_title">システムタイトルのスタイル</string>
     <string name="various_collapse_miui_title_desc">システムアプリのトップバーのタイトルを調整します</string>
-    <string name="various_disable_folder_cantuse">利用できないフォルダの制限を無効化</string>
+    <string name="various_disable_folder_cantuse">利用できないフォルダーの制限を無効化</string>
     <string name="various_open_aosp_battery_title">バッテリーの最適化</string>
     <string name="various_open_aosp_running_services">実行中のサービス</string>
     <string name="various_open_aosp_notification_title">通知設定</string>
@@ -1700,21 +1700,21 @@
     <string name="home_gesture_line_double_click_desc">ジェスチャーバーをダブルタップする</string>
     <string name="home_recent_fix_card_title_padding">カードタイトル下部の余白を修正</string>
     <string name="miui_package_installer_disable_cloud_check">クラウド設定の取得をブロック</string>
-    <string name="miui_package_installer_disable_cloud_check_desc">アプリのインストール時にクラウド設定へのリクエストを傍受し、空の応答を返します。これにより、インストール速度が向上し、オフライン環境でのインストール制限を回避できます。</string>
+    <string name="miui_package_installer_disable_cloud_check_desc">アプリのインストール中にクラウド設定のリクエストを傍受し、空の応答を返します。これにより、読み込み速度が向上し、オフライン環境でのインストール制限を回避できます</string>
     <string name="sogou_xiaomi_clipboard_desc">Sogou 入力方式、Baidu 入力方式、および Xiaomi 向けにカスタマイズされた各バージョンに組み込まれているクリップボードの保存件数制限を解除します。</string>
     <string name="voiceassist">Xiaomi Hyper XiaoAi</string>
     <string name="voiceassist_remove_screen_trans_watermark">画面翻訳から AI 生成の透かしを削除</string>
     <string name="photopicker">写真と動画</string>
     <string name="photopicker_disable_reroute">ネイティブのファイルピッカーと写真ピッカーを使用する</string>
     <string name="photopicker_disable_reroute_desc">HyperOS のギャラリーとファイルマネージャーのサービスの代わりに、Android 標準のピッカーを使用します</string>
-    <string name="various_unlock_ime_apps_desc">選択した入力方式に必要な権限が付与されていない場合は、その権限もあわせて要求されます。</string>
+    <string name="various_unlock_ime_apps_desc">選択された入力方法がスコープ内にない場合、そのアプリのスコープも要求されます。</string>
     <string name="various_unlock_ime_show_all">すべての入力方式を表示</string>
-    <string name="various_unlock_ime_show_all_desc">一部の入力方式は、インストール済みアプリの一覧を取得できないため、入力方式切り替え画面で正しく表示されない場合があります。\nこの機能を使用するには、System Frameworkの権限も必要です。また、パフォーマンスに影響を与える可能性があるため、注意して有効にしてください。</string>
-    <string name="various_unlock_ime_style_miui">MIUIスタイル</string>
-    <string name="various_unlock_ime_style_aosp">AOSPスタイル</string>
+    <string name="various_unlock_ime_show_all_desc">一部の入力方法はインストール済みのアプリリストを照会できないため、入力方式の切り替え画面で正しく表示されない場合があります。\nこの機能を有効にするには、「システムフレームワーク」のスコープが必要となり、パフォーマンスに影響を与える可能性があります。有効にする際は十分にご注意ください。</string>
+    <string name="various_unlock_ime_style_miui">MIUI スタイル</string>
+    <string name="various_unlock_ime_style_aosp">AOSP スタイル</string>
     <string name="various_aosp_ime_nav_bar_layout_start">左側の機能キー</string>
     <string name="various_aosp_ime_nav_bar_layout_end">右側の機能キー</string>
-    <string name="various_aosp_ime_nav_bar_layout_hide_ime">入力方式を非表示</string>
+    <string name="various_aosp_ime_nav_bar_layout_hide_ime">入力方式を折りたたむ</string>
     <string name="various_aosp_ime_nav_bar_layout_ime_switcher">入力方式を切り替え</string>
-    <string name="various_input_method_apps_count">%1$d個の入力方式を選択済み</string>
+    <string name="various_input_method_apps_count">%1$d 個の入力方式が選択されました</string>
 </resources>
