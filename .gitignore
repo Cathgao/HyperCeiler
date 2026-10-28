@@ -14,5 +14,6 @@ local.properties
 /app/canary
 /app/debug
 signing.properties
+*.jks
 /.kotlin
 /library/hook

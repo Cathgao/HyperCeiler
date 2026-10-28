@@ -49,6 +49,7 @@ import io.github.lingqiqi5211.ezhooktool.xposed.dsl.getObjectField
 import io.github.lingqiqi5211.ezhooktool.xposed.dsl.getObjectFieldOrNull
 import io.github.lingqiqi5211.ezhooktool.xposed.dsl.getObjectFieldOrNullAs
 import io.github.lingqiqi5211.ezhooktool.xposed.dsl.setObjectField
+import java.io.File
 import java.io.FileInputStream
 import java.util.Locale
 import java.util.Properties
@@ -95,6 +96,8 @@ object BatteryDetailIndicator : BaseHook() {
     private const val PROP_POWER_SUPPLY_VOLTAGE_NOW = "POWER_SUPPLY_VOLTAGE_NOW"
     private const val PROP_POWER_SUPPLY_STATUS = "POWER_SUPPLY_STATUS"
     private const val BATTERY_UEVENT_PATH = "/sys/class/power_supply/battery/uevent"
+    private const val BATTERY_TEMP_PATH = "/sys/class/power_supply/battery/temp"
+    private const val BOARD_SENSOR_TEMP_PATH = "/sys/class/thermal/thermal_message/board_sensor_temp"
     private const val ID_CLOCK = "clock"
     private const val STYLE_NETWORK_SPEED_NUMBER = "TextAppearance.StatusBar.NetWorkSpeedNumber"
     private const val STYLE_CLOCK = "TextAppearance.StatusBar.Clock"
@@ -114,6 +117,12 @@ object BatteryDetailIndicator : BaseHook() {
     }
     private val hideUnit by lazy {
         PrefsBridge.getStringAsInt("system_ui_statusbar_battery_detail_hide_unit", 0)
+    }
+    private val tempSource by lazy {
+        PrefsBridge.getStringAsInt("system_ui_statusbar_battery_detail_temp_source", 0)
+    }
+    private val customTempPath by lazy {
+        PrefsBridge.getString("system_ui_statusbar_battery_detail_custom_temp_path", "")
     }
     private val tempDecimal by lazy {
         PrefsBridge.getBoolean("system_ui_statusbar_battery_detail_temp_decimal")
@@ -645,6 +654,46 @@ object BatteryDetailIndicator : BaseHook() {
     }
 
     private object MetricsHelper {
+        private val cpuThermalZonePaths: List<String> by lazy {
+            findThermalZonePaths(
+                listOf("cpu", "soc", "ap", "tsens"),
+                listOf("skin", "bcl", "battery", "pa_", "pm", "wifi", "charger", "display")
+            )
+        }
+
+        private val gpuThermalZonePaths: List<String> by lazy {
+            findThermalZonePaths(
+                listOf("gpu", "kgsl", "mfg"),
+                emptyList()
+            )
+        }
+
+        private val skinThermalZonePaths: List<String> by lazy {
+            findThermalZonePaths(
+                listOf("skin", "quiet_therm"),
+                emptyList()
+            )
+        }
+
+        private fun findThermalZonePaths(includeKeywords: List<String>, excludeKeywords: List<String>): List<String> {
+            val results = mutableListOf<String>()
+            val thermalDir = File("/sys/class/thermal")
+            val files = thermalDir.listFiles { file -> file.name.startsWith("thermal_zone") } ?: return results
+            for (zoneDir in files) {
+                val typeFile = File(zoneDir, "type")
+                val tempFile = File(zoneDir, "temp")
+                if (typeFile.exists() && tempFile.exists()) {
+                    val typeStr = runCatching { typeFile.readText().trim().lowercase(Locale.ROOT) }.getOrNull() ?: continue
+                    val matches = includeKeywords.any { typeStr.contains(it) }
+                    val excluded = excludeKeywords.any { typeStr.contains(it) }
+                    if (matches && !excluded) {
+                        results.add(tempFile.absolutePath)
+                    }
+                }
+            }
+            return results
+        }
+
         fun readBatteryUeventProps(): Properties? {
             return try {
                 FileInputStream(BATTERY_UEVENT_PATH).use { fis ->
@@ -655,14 +704,74 @@ object BatteryDetailIndicator : BaseHook() {
             }
         }
 
-        private fun computeTemperature(props: Properties): String {
-            val tempProp = props.getProperty(PROP_POWER_SUPPLY_TEMP)
-            val tempVal = if (!TextUtils.isEmpty(tempProp)) tempProp.toIntOrNull() ?: 0 else 0
-            return if (tempDecimal) {
-                String.format(Locale.getDefault(), "%.1f", tempVal / 10f)
-            } else {
-                if (tempVal % 10 == 0) (tempVal / 10).toString() else (tempVal / 10f).toString()
+        private fun readSingleTempFile(path: String): Float? {
+            val line = runCatching {
+                File(path).bufferedReader().use { it.readLine()?.trim() }
+            }.getOrNull() ?: return null
+            val rawVal = line.toFloatOrNull() ?: return null
+            val absVal = Math.abs(rawVal)
+            val tempC = when {
+                absVal >= 1000f -> rawVal / 1000f
+                absVal >= 100f -> rawVal / 10f
+                else -> rawVal
             }
+            return if (tempC in -30f..150f) tempC else null
+        }
+
+        private fun readMaxTempFromPaths(paths: List<String>): Float? {
+            var maxTemp: Float? = null
+            for (path in paths) {
+                val temp = readSingleTempFile(path) ?: continue
+                if (maxTemp == null || temp > maxTemp) {
+                    maxTemp = temp
+                }
+            }
+            return maxTemp
+        }
+
+        private fun readBatteryTemperature(props: Properties?): Float {
+            val tempProp = props?.getProperty(PROP_POWER_SUPPLY_TEMP)
+            val tempVal = if (!TextUtils.isEmpty(tempProp)) tempProp?.toIntOrNull() ?: 0 else 0
+            if (tempVal != 0) {
+                return tempVal / 10f
+            }
+            return readSingleTempFile(BATTERY_TEMP_PATH) ?: 0f
+        }
+
+        private fun readShellTemperature(): Float? {
+            return readSingleTempFile(BOARD_SENSOR_TEMP_PATH)
+                ?: readMaxTempFromPaths(skinThermalZonePaths)
+        }
+
+        private fun readCustomTemperature(): Float? {
+            val path = customTempPath.trim()
+            if (path.isEmpty()) return null
+            return readSingleTempFile(path)
+        }
+
+        private fun formatTemperature(tempVal: Float): String {
+            return if (tempDecimal) {
+                String.format(Locale.getDefault(), "%.1f", tempVal)
+            } else {
+                val rounded = Math.round(tempVal * 10) / 10f
+                if (rounded % 1f == 0f) {
+                    rounded.toInt().toString()
+                } else {
+                    String.format(Locale.getDefault(), "%.1f", rounded)
+                }
+            }
+        }
+
+        private fun computeTemperature(props: Properties): String {
+            val tempC = when (tempSource) {
+                1 -> readMaxTempFromPaths(cpuThermalZonePaths)
+                2 -> readMaxTempFromPaths(gpuThermalZonePaths)
+                3 -> readShellTemperature()
+                4 -> readCustomTemperature()
+                else -> null
+            } ?: readBatteryTemperature(props)
+
+            return formatTemperature(tempC)
         }
 
         private fun computeCurrent(props: Properties): Pair<String, Int> {

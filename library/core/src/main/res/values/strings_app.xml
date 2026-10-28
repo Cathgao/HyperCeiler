@@ -719,6 +719,9 @@
     <string name="system_ui_statusbar_battery_detail_enable">Display battery info</string>
     <string name="system_ui_statusbar_battery_detail_content_title">Display content</string>
     <string name="system_ui_statusbar_battery_detail_hide_unit_title">Hide unit</string>
+    <string name="system_ui_statusbar_battery_detail_temp_source_title">Temperature source</string>
+    <string name="system_ui_statusbar_battery_detail_custom_temp_path_title">Custom temperature node path</string>
+    <string name="system_ui_statusbar_battery_detail_custom_temp_path_summary">Full path to the sysfs node for reading temperature</string>
     <string name="system_ui_statusbar_battery_detail_at_right_title">Display on the right</string>
     <string name="system_ui_statusbar_battery_detail_temp_decimal_title">Temperature is always displayed as a decimal</string>
     <string name="system_ui_statusbar_battery_detail_positive_title">Current value is always positive</string>
@@ -743,6 +746,11 @@
     <string name="array_hide_unit_all">Hide all</string>
     <string name="array_hide_unit_temp">Hide temperature unit</string>
     <string name="array_hide_unit_power_current">Hide current and power unit</string>
+    <string name="array_temp_source_battery">Battery</string>
+    <string name="array_temp_source_cpu">CPU (Highest core)</string>
+    <string name="array_temp_source_gpu">GPU</string>
+    <string name="array_temp_source_shell">Device shell / Skin</string>
+    <string name="array_temp_source_custom">Custom node</string>
     <string name="system_ui_statusbar_iconmanage_wifi_title">Wi-Fi</string>
     <string name="system_ui_statusbar_iconmanage_bluetooth_title">Bluetooth</string>
     <string name="system_ui_statusbar_iconmanage_mobile_title">Mobile network</string>

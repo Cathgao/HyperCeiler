@@ -1062,4 +1062,20 @@
         <item>2</item>
         <item>3</item>
     </string-array>
+
+    <string-array name="system_ui_statusbar_battery_detail_temp_source_entries">
+        <item>@string/array_temp_source_battery</item>
+        <item>@string/array_temp_source_cpu</item>
+        <item>@string/array_temp_source_gpu</item>
+        <item>@string/array_temp_source_shell</item>
+        <item>@string/array_temp_source_custom</item>
+    </string-array>
+
+    <string-array name="system_ui_statusbar_battery_detail_temp_source_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
 </resources>

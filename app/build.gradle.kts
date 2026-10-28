@@ -71,6 +71,17 @@ android {
             // noinspection ChromeOsAbiSupport
             abiFilters += "arm64-v8a"
         }
+
+        externalNativeBuild {
+            cmake {
+                cFlags("-O3", "-flto")
+                cppFlags("-O3", "-flto")
+            }
+            ndkBuild {
+                cFlags("-O3", "-flto")
+                cppFlags("-O3", "-flto")
+            }
+        }
     }
 
     buildFeatures {

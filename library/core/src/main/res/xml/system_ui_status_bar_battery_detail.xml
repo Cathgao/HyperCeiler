@@ -42,6 +42,19 @@
 
         <fan.preference.DropDownPreference
             android:defaultValue="0"
+            android:key="prefs_key_system_ui_statusbar_battery_detail_temp_source"
+            android:title="@string/system_ui_statusbar_battery_detail_temp_source_title"
+            app:entries="@array/system_ui_statusbar_battery_detail_temp_source_entries"
+            app:entryValues="@array/system_ui_statusbar_battery_detail_temp_source_values" />
+
+        <EditTextPreference
+            android:defaultValue="/sys/class/thermal/thermal_message/board_sensor_temp"
+            android:key="prefs_key_system_ui_statusbar_battery_detail_custom_temp_path"
+            android:summary="@string/system_ui_statusbar_battery_detail_custom_temp_path_summary"
+            android:title="@string/system_ui_statusbar_battery_detail_custom_temp_path_title" />
+
+        <fan.preference.DropDownPreference
+            android:defaultValue="0"
             android:key="prefs_key_system_ui_statusbar_battery_detail_hide_unit"
             android:title="@string/system_ui_statusbar_battery_detail_hide_unit_title"
             app:entries="@array/system_ui_statusbar_battery_detail_hide_unit_entries"

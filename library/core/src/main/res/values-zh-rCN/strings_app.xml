@@ -731,6 +731,9 @@
     <string name="system_ui_statusbar_battery_detail_enable">显示电池信息</string>
     <string name="system_ui_statusbar_battery_detail_content_title">显示内容</string>
     <string name="system_ui_statusbar_battery_detail_hide_unit_title">隐藏单位</string>
+    <string name="system_ui_statusbar_battery_detail_temp_source_title">温度来源</string>
+    <string name="system_ui_statusbar_battery_detail_custom_temp_path_title">自定义温度节点路径</string>
+    <string name="system_ui_statusbar_battery_detail_custom_temp_path_summary">读取温度的 sysfs 节点完整路径</string>
     <string name="system_ui_statusbar_battery_detail_at_right_title">右侧显示</string>
     <string name="system_ui_statusbar_battery_detail_temp_decimal_title">温度总显示成小数</string>
     <string name="system_ui_statusbar_battery_detail_positive_title">电流总显示正值</string>
@@ -755,6 +758,11 @@
     <string name="array_hide_unit_all">全部隐藏</string>
     <string name="array_hide_unit_temp">仅隐藏温度单位</string>
     <string name="array_hide_unit_power_current">仅隐藏电流与功率单位</string>
+    <string name="array_temp_source_battery">电池温度</string>
+    <string name="array_temp_source_cpu">CPU 温度（最高核心）</string>
+    <string name="array_temp_source_gpu">GPU 温度</string>
+    <string name="array_temp_source_shell">机身表面温控壳温</string>
+    <string name="array_temp_source_custom">自定义节点</string>
     <string name="system_ui_status_bar_wifi_at_left">WIFI</string>
     <string name="system_ui_status_bar_mobile_network_at_left">移动网络</string>
     <string name="system_ui_status_bar_swap_wifi_and_mobile_network">交换 WIFI 与移动网络</string>

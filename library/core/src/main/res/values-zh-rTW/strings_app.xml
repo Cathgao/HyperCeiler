@@ -699,6 +699,9 @@
     <string name="system_ui_statusbar_battery_detail_enable">顯示電池資訊</string>
     <string name="system_ui_statusbar_battery_detail_content_title">顯示內容</string>
     <string name="system_ui_statusbar_battery_detail_hide_unit_title">隱藏單位</string>
+    <string name="system_ui_statusbar_battery_detail_temp_source_title">溫度來源</string>
+    <string name="system_ui_statusbar_battery_detail_custom_temp_path_title">自訂溫度節點路徑</string>
+    <string name="system_ui_statusbar_battery_detail_custom_temp_path_summary">讀取溫度的 sysfs 節點完整路徑</string>
     <string name="system_ui_statusbar_battery_detail_at_right_title">右側顯示</string>
     <string name="system_ui_statusbar_battery_detail_temp_decimal_title">溫度總顯示成小數</string>
     <string name="system_ui_statusbar_battery_detail_positive_title">電流總顯示正值</string>
@@ -723,6 +726,11 @@
     <string name="array_hide_unit_all">全部隱藏</string>
     <string name="array_hide_unit_temp">僅隱藏溫度單位</string>
     <string name="array_hide_unit_power_current">僅隱藏電流與功率單位</string>
+    <string name="array_temp_source_battery">電池溫度</string>
+    <string name="array_temp_source_cpu">CPU 溫度（最高核心）</string>
+    <string name="array_temp_source_gpu">GPU 溫度</string>
+    <string name="array_temp_source_shell">機身表面溫控外殼溫度</string>
+    <string name="array_temp_source_custom">自訂節點</string>
     <string name="system_ui_status_bar_wifi_at_left">Wi-Fi</string>
     <string name="system_ui_status_bar_mobile_network_at_left">行動網路</string>
     <string name="system_ui_status_bar_swap_wifi_and_mobile_network">交換 Wi-Fi 與行動網路</string>
