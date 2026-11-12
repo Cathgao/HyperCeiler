@@ -23,16 +23,21 @@ import com.sevtinge.hyperceiler.common.log.XposedLog;
 import com.sevtinge.hyperceiler.libhook.base.BaseHook;
 import io.github.lingqiqi5211.ezhooktool.xposed.java.IMethodHook;
 
+import org.luckypray.dexkit.query.FindClass;
 import org.luckypray.dexkit.query.FindMethod;
+import org.luckypray.dexkit.query.matchers.ClassMatcher;
 import org.luckypray.dexkit.query.matchers.MethodMatcher;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.List;
 
 import io.github.lingqiqi5211.ezhooktool.xposed.common.HookParam;
 
 public class DisableRootedCheck extends BaseHook {
     private List<Method> mCheckRootMethods;
+    private Class<?> mRootClass;
 
     @Override
     protected boolean useDexKit() {
@@ -41,25 +46,61 @@ public class DisableRootedCheck extends BaseHook {
 
     @Override
     protected boolean initDexKit() {
-        mCheckRootMethods = requiredMemberList("CheckRoot", bridge -> bridge.findMethod(FindMethod.create()
+        mCheckRootMethods = optionalMemberList("CheckRoot", bridge -> bridge.findMethod(FindMethod.create()
             .matcher(MethodMatcher.create()
-                .usingStrings("/system/bin/")
+                .usingStrings("/system/bin/su")
                 .returnType(boolean.class)
             )));
-        return true;
+        mRootClass = optionalMember("RootClass", bridge -> {
+            var list = bridge.findClass(FindClass.create()
+                .matcher(ClassMatcher.create()
+                    .usingStrings("Current device is rooted")
+                ));
+            return (list != null && !list.isEmpty()) ? list.first() : null;
+        });
+        return (mCheckRootMethods != null && !mCheckRootMethods.isEmpty()) || mRootClass != null;
     }
 
     @Override
     public void init() {
-        for (Method method : mCheckRootMethods) {
-            // Method method = methodData.getMethodInstance(lpparam.classLoader);
-            XposedLog.d(TAG, getPackageName(), "Current hooking method is " + method);
-            hookMethod(method, new IMethodHook() {
-                @Override
-                public void before(HookParam param) {
-                    param.setResult(false);
+        if (mCheckRootMethods != null) {
+            for (Method method : mCheckRootMethods) {
+                XposedLog.d(TAG, getPackageName(), "Current hooking method is " + method);
+                hookMethod(method, new IMethodHook() {
+                    @Override
+                    public void before(HookParam param) {
+                        param.setResult(false);
+                    }
+                });
+            }
+        }
+        if (mRootClass != null) {
+            resetRootFields();
+            try {
+                hookAllMethods(android.app.Application.class, "onCreate", new IMethodHook() {
+                    @Override
+                    public void after(HookParam param) {
+                        resetRootFields();
+                    }
+                });
+            } catch (Throwable t) {
+                XposedLog.w(TAG, getPackageName(), "Failed to hook Application.onCreate", t);
+            }
+        }
+    }
+
+    private void resetRootFields() {
+        if (mRootClass == null) return;
+        try {
+            Class.forName(mRootClass.getName(), true, getClassLoader());
+            for (Field field : mRootClass.getDeclaredFields()) {
+                if (Modifier.isStatic(field.getModifiers()) && field.getType() == boolean.class) {
+                    setStaticBooleanField(mRootClass, field.getName(), false);
+                    XposedLog.d(TAG, getPackageName(), "Reset static root boolean field: " + field.getName());
                 }
-            });
+            }
+        } catch (Throwable t) {
+            XposedLog.w(TAG, getPackageName(), "Failed to reset root fields on " + mRootClass, t);
         }
     }
 }

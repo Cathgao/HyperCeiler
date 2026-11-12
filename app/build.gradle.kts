@@ -103,7 +103,7 @@ android {
         }
     }
 
-    val properties: Properties? = loadPropertiesFromFile("signing.properties")
+    val properties: Properties? = loadPropertiesFromFile("signing.properties")?.takeIf { it.containsKey("storeFile") }
     fun getString(propertyName: String, environmentName: String, prompt: String): String =
         properties?.getProperty(propertyName)
             ?: System.getenv(environmentName)

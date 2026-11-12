@@ -131,21 +131,21 @@ internal object DexKitCacheManager {
      * 缓存未命中时：获取原生桥，执行 [iDexKit]，然后序列化并写入缓存。
      */
     @Suppress("UNCHECKED_CAST")
-    fun <T> findMember(key: String, iDexKit: IDexKit): T {
+    fun <T> findMember(key: String, iDexKit: IDexKit): T? {
         val currentTarget = target ?: throw IllegalStateException("DexKit not ready")
         val classLoader = currentTarget.classLoader
 
         // 缓存 key 不带前缀，由 strings / lists 分组隐式区分
         // 先尝试命中内存缓存，命中时不创建原生桥
         cache?.getString(key, null)?.let { cached ->
-            return deserializeAndResolve(cached, classLoader) as T
+            deserializeAndResolve(cached, classLoader)?.let { return it as T }
         }
 
         // 缓存未命中，获取原生桥执行查询
         val currentBridge = bridge ?: throw IllegalStateException("DexKit not initialized")
         var result: Any? = null
         currentBridge.withBridge { rawBridge ->
-            val baseData: BaseData = try {
+            val baseData: BaseData? = try {
                 iDexKit.dexkit(rawBridge)
             } catch (e: ReflectiveOperationException) {
                 throw RuntimeException(e)
@@ -153,7 +153,7 @@ internal object DexKitCacheManager {
             result = resolveAndCache(baseData, key, classLoader)
         }
 
-        return result as T
+        return result as? T
     }
 
     /**
@@ -167,7 +167,10 @@ internal object DexKitCacheManager {
         // 缓存 key 不带前缀，由 strings / lists 分组隐式区分
         // 先尝试命中缓存
         cache?.getStringList(key, null)?.let { cachedList ->
-            return cachedList.map { deserializeAndResolve(it, classLoader) as T }
+            val resolvedList = cachedList.mapNotNull { deserializeAndResolve(it, classLoader) as? T }
+            if (resolvedList.size == cachedList.size) {
+                return resolvedList
+            }
         }
 
         // 缓存未命中，获取原生桥执行查询
@@ -180,22 +183,32 @@ internal object DexKitCacheManager {
                 throw RuntimeException(e)
             }
 
-            val serializedList = mutableListOf<String>()
-            when (baseDataList) {
-                is FieldDataList -> for (f in baseDataList) {
-                    serializedList.add(f.toDexField().serialize())
-                    resultList.add(f.getFieldInstance(classLoader) as T)
+            if (baseDataList != null) {
+                val serializedList = mutableListOf<String>()
+                when (baseDataList) {
+                    is FieldDataList -> for (f in baseDataList) {
+                        serializedList.add(f.toDexField().serialize())
+                        resultList.add(f.getFieldInstance(classLoader) as T)
+                    }
+                    is MethodDataList -> for (m in baseDataList) {
+                        if (!m.isMethod) continue
+                        try {
+                            val instance = m.getMethodInstance(classLoader) as T
+                            serializedList.add(m.toDexMethod().serialize())
+                            resultList.add(instance)
+                        } catch (t: Throwable) {
+                            XposedLog.w(tag, "Failed to resolve MethodData: ${m.descriptor}", t)
+                        }
+                    }
+                    is ClassDataList -> for (c in baseDataList) {
+                        serializedList.add(c.toDexClass().serialize())
+                        resultList.add(c.getInstance(classLoader) as T)
+                    }
                 }
-                is MethodDataList -> for (m in baseDataList) {
-                    serializedList.add(m.toDexMethod().serialize())
-                    resultList.add(m.getMethodInstance(classLoader) as T)
-                }
-                is ClassDataList -> for (c in baseDataList) {
-                    serializedList.add(c.toDexClass().serialize())
-                    resultList.add(c.getInstance(classLoader) as T)
+                if (serializedList.isNotEmpty()) {
+                    cache?.putStringList(key, serializedList)
                 }
             }
-            cache?.putStringList(key, serializedList)
         }
 
         return resultList
@@ -298,12 +311,17 @@ internal object DexKitCacheManager {
      * - 含 `->` 但不含 `:`：视为 [DexMethod]
      * - 同时含 `->` 和 `:`：视为 [DexField]
      */
-    private fun deserializeAndResolve(serialized: String, classLoader: ClassLoader): Any {
-        return when (val wrapper = ISerializable.deserialize(serialized)) {
-            is DexMethod -> wrapper.getMethodInstance(classLoader)
-            is DexField -> wrapper.getFieldInstance(classLoader)
-            is DexClass -> wrapper.getInstance(classLoader)
-            else -> throw IllegalStateException("Unknown ISerializable type: ${wrapper.javaClass}")
+    private fun deserializeAndResolve(serialized: String, classLoader: ClassLoader): Any? {
+        return try {
+            when (val wrapper = ISerializable.deserialize(serialized)) {
+                is DexMethod -> wrapper.getMethodInstance(classLoader)
+                is DexField -> wrapper.getFieldInstance(classLoader)
+                is DexClass -> wrapper.getInstance(classLoader)
+                else -> throw IllegalStateException("Unknown ISerializable type: ${wrapper.javaClass}")
+            }
+        } catch (t: Throwable) {
+            XposedLog.w(tag, "Failed to resolve cached member: $serialized", t)
+            null
         }
     }
 
@@ -311,18 +329,26 @@ internal object DexKitCacheManager {
      * 把新查询得到的 [BaseData] 解析为反射对象，同时缓存其序列化结果。
      */
     private fun resolveAndCache(
-        baseData: BaseData,
+        baseData: BaseData?,
         key: String,
         classLoader: ClassLoader
-    ): Any {
+    ): Any? {
+        if (baseData == null) return null
         return when (baseData) {
             is FieldData -> {
                 cache?.putString(key, baseData.toDexField().serialize())
                 baseData.getFieldInstance(classLoader)
             }
             is MethodData -> {
-                cache?.putString(key, baseData.toDexMethod().serialize())
-                baseData.getMethodInstance(classLoader)
+                if (!baseData.isMethod) return null
+                try {
+                    val instance = baseData.getMethodInstance(classLoader)
+                    cache?.putString(key, baseData.toDexMethod().serialize())
+                    instance
+                } catch (t: Throwable) {
+                    XposedLog.w(tag, "Failed to resolve MethodData: ${baseData.descriptor}", t)
+                    null
+                }
             }
             is ClassData -> {
                 cache?.putString(key, baseData.toDexClass().serialize())

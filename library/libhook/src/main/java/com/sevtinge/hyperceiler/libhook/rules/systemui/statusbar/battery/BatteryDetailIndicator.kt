@@ -51,6 +51,8 @@ import io.github.lingqiqi5211.ezhooktool.xposed.dsl.getObjectFieldOrNullAs
 import io.github.lingqiqi5211.ezhooktool.xposed.dsl.setObjectField
 import java.io.File
 import java.io.FileInputStream
+import java.lang.reflect.Field
+import java.lang.reflect.Method
 import java.util.Locale
 import java.util.Properties
 import java.util.concurrent.CopyOnWriteArrayList
@@ -644,12 +646,24 @@ object BatteryDetailIndicator : BaseHook() {
             return charging
         }
 
+        private var chargeUtilsInitialized = false
+        private var sBatteryStatusField: Field? = null
+        private var isChargingMethod: Method? = null
+
         private fun checkChargeUtilsState(): Boolean {
-            val chargeUtilsClass = loadClassOrNull("com.miui.charge.ChargeUtils", lpparam.classLoader)
-                ?: loadClassOrNull("com.android.keyguard.charge.ChargeUtils", lpparam.classLoader)
-                ?: return false
-            val sBatteryStatus = runCatching { chargeUtilsClass.getObjectFieldOrNull(FIELD_S_BATTERY_STATUS) }.getOrNull() ?: return false
-            return runCatching { sBatteryStatus.callMethod(METHOD_IS_CHARGING) as Boolean }.getOrDefault(false)
+            if (!chargeUtilsInitialized) {
+                chargeUtilsInitialized = true
+                val chargeUtilsClass = loadClassOrNull("com.miui.charge.ChargeUtils", lpparam.classLoader)
+                    ?: loadClassOrNull("com.android.keyguard.charge.ChargeUtils", lpparam.classLoader)
+                sBatteryStatusField = chargeUtilsClass?.declaredFields?.firstOrNull { it.name == FIELD_S_BATTERY_STATUS }?.apply { isAccessible = true }
+            }
+            val field = sBatteryStatusField ?: return false
+            val sBatteryStatus = try { field.get(null) } catch (_: Throwable) { null } ?: return false
+            if (isChargingMethod == null) {
+                isChargingMethod = sBatteryStatus::class.java.methods.firstOrNull { it.name == METHOD_IS_CHARGING && it.parameterCount == 0 }?.apply { isAccessible = true }
+            }
+            val method = isChargingMethod ?: return false
+            return try { (method.invoke(sBatteryStatus) as? Boolean) ?: false } catch (_: Throwable) { false }
         }
     }
 
@@ -695,10 +709,26 @@ object BatteryDetailIndicator : BaseHook() {
         }
 
         fun readBatteryUeventProps(): Properties? {
+            val file = File(BATTERY_UEVENT_PATH)
+            if (!file.exists()) return null
             return try {
-                FileInputStream(BATTERY_UEVENT_PATH).use { fis ->
-                    Properties().apply { load(fis) }
+                val props = Properties()
+                file.bufferedReader().useLines { lines ->
+                    for (line in lines) {
+                        val eqIdx = line.indexOf('=')
+                        if (eqIdx <= 0) continue
+                        val key = line.substring(0, eqIdx)
+                        when (key) {
+                            PROP_POWER_SUPPLY_TEMP,
+                            PROP_POWER_SUPPLY_CURRENT_NOW,
+                            PROP_POWER_SUPPLY_VOLTAGE_NOW,
+                            PROP_POWER_SUPPLY_STATUS -> {
+                                props.setProperty(key, line.substring(eqIdx + 1))
+                            }
+                        }
+                    }
                 }
+                props
             } catch (_: Throwable) {
                 null
             }

@@ -61,6 +61,18 @@ public class PrefsBridge {
         isHookProcess = true;
         clearHookCache();
         mRemotePrefs = remote;
+        try {
+            remote.registerOnSharedPreferenceChangeListener((sharedPreferences, key) -> {
+                if (key != null) {
+                    sHookCache.remove(wrap(key));
+                    sHookCache.remove(key);
+                } else {
+                    sHookCache.clear();
+                }
+            });
+        } catch (Throwable t) {
+            AndroidLog.w(TAG, "Failed to register listener on remote prefs", t);
+        }
     }
 
     /**
@@ -233,7 +245,14 @@ public class PrefsBridge {
     public static boolean getBoolean(String key, boolean def) {
         String rKey = wrap(key);
         Object cached = sHookCache.get(rKey);
-        return cached instanceof Boolean ? (Boolean) cached : requireImpl().getBoolean(rKey, def);
+        if (cached instanceof Boolean) {
+            return (Boolean) cached;
+        }
+        boolean val = requireImpl().getBoolean(rKey, def);
+        if (isHookProcess) {
+            sHookCache.put(rKey, val);
+        }
+        return val;
     }
 
     /**
@@ -242,7 +261,14 @@ public class PrefsBridge {
     public static String getString(String key, String def) {
         String rKey = wrap(key);
         Object cached = sHookCache.get(rKey);
-        return cached instanceof String ? (String) cached : requireImpl().getString(rKey, def);
+        if (cached instanceof String) {
+            return (String) cached;
+        }
+        String val = requireImpl().getString(rKey, def);
+        if (isHookProcess && val != null) {
+            sHookCache.put(rKey, val);
+        }
+        return val;
     }
 
     /**
@@ -270,15 +296,20 @@ public class PrefsBridge {
         }
 
         SharedPreferences prefs = requireImpl();
+        int result;
         try {
-            return prefs.getInt(rKey, def);
+            result = prefs.getInt(rKey, def);
         } catch (ClassCastException ignored) {
             try {
-                return parseStringInt(prefs.getString(rKey, null), def);
+                result = parseStringInt(prefs.getString(rKey, null), def);
             } catch (ClassCastException ignoredAgain) {
-                return def;
+                result = def;
             }
         }
+        if (isHookProcess) {
+            sHookCache.put(rKey, result);
+        }
+        return result;
     }
 
     /**
@@ -287,7 +318,14 @@ public class PrefsBridge {
     public static long getLong(String key, long def) {
         String rKey = wrap(key);
         Object cached = sHookCache.get(rKey);
-        return cached instanceof Long ? (Long) cached : requireImpl().getLong(rKey, def);
+        if (cached instanceof Long) {
+            return (Long) cached;
+        }
+        long val = requireImpl().getLong(rKey, def);
+        if (isHookProcess) {
+            sHookCache.put(rKey, val);
+        }
+        return val;
     }
 
     /**
@@ -296,7 +334,14 @@ public class PrefsBridge {
     public static float getFloat(String key, float def) {
         String rKey = wrap(key);
         Object cached = sHookCache.get(rKey);
-        return cached instanceof Float ? (Float) cached : requireImpl().getFloat(rKey, def);
+        if (cached instanceof Float) {
+            return (Float) cached;
+        }
+        float val = requireImpl().getFloat(rKey, def);
+        if (isHookProcess) {
+            sHookCache.put(rKey, val);
+        }
+        return val;
     }
 
     /**
@@ -323,7 +368,14 @@ public class PrefsBridge {
             return result;
         }
         Set<String> value = requireImpl().getStringSet(rKey, def);
-        return value == null ? null : new LinkedHashSet<>(value);
+        if (value == null) {
+            return null;
+        }
+        LinkedHashSet<String> result = new LinkedHashSet<>(value);
+        if (isHookProcess) {
+            sHookCache.put(rKey, result);
+        }
+        return result;
     }
 
     /**

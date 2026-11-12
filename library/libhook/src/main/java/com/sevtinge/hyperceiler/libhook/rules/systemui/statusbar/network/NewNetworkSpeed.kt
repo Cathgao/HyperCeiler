@@ -215,7 +215,17 @@ object NewNetworkSpeed : BaseHook() {
         }
     }
 
+    private val trafficBytesBuffer = LongArray(2)
+
     private fun getTrafficBytes(out: LongArray) {
+        val totalTx = TrafficStats.getTotalTxBytes()
+        val totalRx = TrafficStats.getTotalRxBytes()
+        if (totalTx != -1L && totalRx != -1L) {
+            out[0] = totalTx
+            out[1] = totalRx
+            return
+        }
+
         out[0] = 0L // tx
         out[1] = 0L // rx
 
@@ -231,8 +241,8 @@ object NewNetworkSpeed : BaseHook() {
                 }
         }.onFailure { t ->
             XposedLog.e(TAG, this.lpparam.packageName, t)
-            out[0] = TrafficStats.getTotalTxBytes()
-            out[1] = TrafficStats.getTotalRxBytes()
+            out[0] = if (totalTx != -1L) totalTx else 0L
+            out[1] = if (totalRx != -1L) totalRx else 0L
         }
     }
 
@@ -307,7 +317,7 @@ object NewNetworkSpeed : BaseHook() {
         if (measureTimeNanos == 0L || interval <= 0L) {
             measureTimeNanos = nowNanos
             // initialize totals but do not compute speeds this tick
-            val out = LongArray(2)
+            val out = trafficBytesBuffer
             getTrafficBytes(out)
             txBytesTotal = out[0]
             rxBytesTotal = out[1]
@@ -328,7 +338,7 @@ object NewNetworkSpeed : BaseHook() {
         }
         measureTimeNanos = nowNanos
 
-        val out = LongArray(2)
+        val out = trafficBytesBuffer
         getTrafficBytes(out)
         val newTxBytes = out[0]
         val newRxBytes = out[1]

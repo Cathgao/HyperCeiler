@@ -29,6 +29,7 @@ import java.lang.reflect.Method;
 import io.github.lingqiqi5211.ezhooktool.xposed.common.HookParam;
 
 public class DisableUploadAppListNew extends BaseHook {
+    private Method mDetectAppMethod;
     private Method mAntiDefraudAppManagerMethod;
 
     @Override
@@ -38,20 +39,42 @@ public class DisableUploadAppListNew extends BaseHook {
 
     @Override
     protected boolean initDexKit() {
-        mAntiDefraudAppManagerMethod = requiredMember("AntiDefraudAppManager", bridge -> bridge.findMethod(FindMethod.create()
-            .matcher(MethodMatcher.create()
-                .usingStrings("AntiDefraudAppManager", "https://flash.sec.miui.com/detect/app")
-            )).singleOrNull());
-        return true;
+        mDetectAppMethod = optionalMember("DetectAppMethod", bridge -> {
+            var list = bridge.findMethod(FindMethod.create()
+                .matcher(MethodMatcher.create()
+                    .usingStrings("https://flash.sec.miui.com/detect/app")
+                ));
+            return (list != null && !list.isEmpty()) ? list.first() : null;
+        });
+
+        mAntiDefraudAppManagerMethod = optionalMember("AntiDefraudAppManager", bridge -> {
+            var list = bridge.findMethod(FindMethod.create()
+                .matcher(MethodMatcher.create()
+                    .usingStrings("AntiDefraudAppManager", "getAllUnSystemAppsStatus error, ")
+                ));
+            return (list != null && !list.isEmpty()) ? list.first() : null;
+        });
+
+        return mDetectAppMethod != null || mAntiDefraudAppManagerMethod != null;
     }
 
     @Override
     public void init() {
-        com.sevtinge.hyperceiler.libhook.base.BaseHook.hookMethod(mAntiDefraudAppManagerMethod, new IReplaceHook() {
-            @Override
-            public Object replace(HookParam param) {
-                return null;
-            }
-        });
+        if (mAntiDefraudAppManagerMethod != null) {
+            hookMethod(mAntiDefraudAppManagerMethod, new IReplaceHook() {
+                @Override
+                public Object replace(HookParam param) {
+                    return null;
+                }
+            });
+        }
+        if (mDetectAppMethod != null) {
+            hookMethod(mDetectAppMethod, new IReplaceHook() {
+                @Override
+                public Object replace(HookParam param) {
+                    return null;
+                }
+            });
+        }
     }
 }

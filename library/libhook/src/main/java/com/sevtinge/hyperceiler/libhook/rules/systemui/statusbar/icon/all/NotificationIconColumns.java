@@ -85,7 +85,9 @@ public class NotificationIconColumns extends BaseHook {
         IMethodHook setMaxIconsHook = new IMethodHook() {
             @Override
             public void before(HookParam param) {
-                setObjectField(param.getThisObject(), "mMaxIcons", maxIconsNum);
+                if (getIntField(param.getThisObject(), "mMaxIcons") != maxIconsNum) {
+                    setIntField(param.getThisObject(), "mMaxIcons", maxIconsNum);
+                }
             }
         };
 

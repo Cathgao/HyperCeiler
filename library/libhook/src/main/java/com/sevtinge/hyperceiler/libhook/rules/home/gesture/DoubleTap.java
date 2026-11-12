@@ -48,11 +48,17 @@ public class DoubleTap extends BaseHook {
         });
 
         findAndHookMethod(mWorkspace, "dispatchTouchEvent", MotionEvent.class, new IMethodHook() {
-                @Override
-                public void before(HookParam param) {
+            @Override
+            public void before(HookParam param) {
+                MotionEvent event = (MotionEvent) param.getArgs()[0];
+                if (event == null) return;
+                int action = event.getActionMasked();
+                if (action != MotionEvent.ACTION_DOWN && action != MotionEvent.ACTION_UP) {
+                    return;
+                }
                 DoubleTapController mDoubleTapControllerEx = (DoubleTapController) com.sevtinge.hyperceiler.libhook.base.BaseHook.getAdditionalInstanceField(param.getThisObject(), "mDoubleTapControllerEx");
                 if (mDoubleTapControllerEx == null) return;
-                if (!mDoubleTapControllerEx.isDoubleTapEvent((MotionEvent) param.getArgs()[0])) return;
+                if (!mDoubleTapControllerEx.isDoubleTapEvent(event)) return;
                 int mCurrentScreenIndex = com.sevtinge.hyperceiler.libhook.base.BaseHook.getIntField(param.getThisObject(), getPackageName().equals("com.miui.home") ? "mCurrentScreenIndex" : "mCurrentScreen");
                 Object cellLayout = com.sevtinge.hyperceiler.libhook.base.BaseHook.callMethod(param.getThisObject(), "getCellLayout", mCurrentScreenIndex);
                 if ((boolean) com.sevtinge.hyperceiler.libhook.base.BaseHook.callMethod(cellLayout, "lastDownOnOccupiedCell")) return;

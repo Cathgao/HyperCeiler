@@ -28,12 +28,27 @@ import java.lang.reflect.Method
 
 object DisableCloudCheck : BaseHook() {
 
+    private var fetchMethods: List<Method>? = null
+
     override fun useDexKit() = true
 
     override fun initDexKit(): Boolean {
-        method1
-        method2
-        return true
+        return try {
+            method1
+            method2
+            fetchMethods = optionalMemberList("DisableCloudCheck_Fetch") {
+                it.findMethod {
+                    matcher {
+                        paramCount = 6
+                        usingStrings("antifraudLabel", "app_sec_check")
+                        returnType = Any::class.java.name
+                    }
+                }
+            }
+            true
+        } catch (t: Throwable) {
+            false
+        }
     }
 
     private val method1 by lazy<Method> {
@@ -48,42 +63,31 @@ object DisableCloudCheck : BaseHook() {
     }
 
     private val method2 by lazy<Method> {
-        requiredMember("NormalInstallBtn") {
-            it.findMethod {
+        requiredMember("NormalInstallBtn") { bridge ->
+            val declaringClassName = method1.declaringClass.name
+            bridge.findMethod {
                 matcher {
-                    usingStrings("getString(if (shouldUseU…e R.string.start_install)")
+                    declaredClass(declaringClassName)
+                    usingStrings("install_btn")
                 }
-            }.single()
+            }.first { it.name != method1.name }
         }
     }
 
     override fun init() {
-        // 签名对应：public final java.lang.Object c(Context, g, int, ApkInfo, HashMap, Continuation)
-        val methods = DexKit.findMemberList<Method>("DisableCloudCheck_Fetch") {
-            it.findMethod {
-                matcher {
-                    paramCount = 6
-                    paramTypes(
-                        Context::class.java.name,
-                        "",
-                        Int::class.javaPrimitiveType?.name ?: "int",
-                        "com.miui.packageInstaller.model.ApkInfo",
-                        HashMap::class.java.name,
-                        "kotlin.coroutines.Continuation"
-                    )
-                    returnType = Any::class.java.name
-                }
-            }
-        }
-
         hookMethod(method1, object : IMethodHook {
             override fun before(param: HookParam) {
-                callMethod(param.thisObject, method2.name, param.args[0])
+                if (java.lang.reflect.Modifier.isStatic(method2.modifiers)) {
+                    method2.isAccessible = true
+                    method2.invoke(null, param.thisObject, param.args[0])
+                } else {
+                    callMethod(param.thisObject, method2.name, param.args[0])
+                }
                 param.result = null
             }
         })
 
-        methods.forEach { method ->
+        fetchMethods?.forEach { method ->
             try {
                 method.createHook {
                     replace { param ->

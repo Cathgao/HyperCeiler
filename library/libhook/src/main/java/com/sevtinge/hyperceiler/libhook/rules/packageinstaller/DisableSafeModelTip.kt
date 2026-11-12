@@ -18,48 +18,70 @@
 */
 package com.sevtinge.hyperceiler.libhook.rules.packageinstaller
 
+import android.view.View
 import com.sevtinge.hyperceiler.libhook.base.BaseHook
-import io.github.lingqiqi5211.ezhooktool.xposed.dsl.setBooleanField
-import io.github.lingqiqi5211.ezhooktool.core.findMethod
-import io.github.lingqiqi5211.ezhooktool.xposed.dsl.createAfterHook
+import io.github.lingqiqi5211.ezhooktool.xposed.common.HookParam
 import io.github.lingqiqi5211.ezhooktool.xposed.dsl.createHook
-import java.lang.reflect.Field
+import io.github.lingqiqi5211.ezhooktool.xposed.java.IMethodHook
 import java.lang.reflect.Method
+import java.lang.reflect.Modifier
 
 object DisableSafeModelTip : BaseHook() {
     override fun useDexKit() = true
-    private lateinit var disableSafeModelTipMethod: Method
-    private lateinit var recyclerViewField: Field
+    private var disableSafeModelTipMethod: Method? = null
+    private var safeModeTipClass: Class<*>? = null
 
     override fun initDexKit(): Boolean {
-        disableSafeModelTipMethod = requiredMember("DisableSafeModelTip") {
+        disableSafeModelTipMethod = optionalMember("DisableSafeModelTip") {
             it.findMethod {
                 matcher {
                     usingEqStrings($$"android.provider.MiuiSettings$Ad")
                 }
-            }.singleOrNull()
+            }.firstOrNull()
         }
-        recyclerViewField = requiredMember("RecyclerView") {
+        safeModeTipClass = optionalMember("SafeModeTipClass") {
             it.findClass {
                 matcher {
                     className = "com.miui.packageInstaller.ui.listcomponets.SafeModeTipViewObject"
                 }
-            }.single().superClass?.findField {
-                matcher {
-                    type = "boolean"
-                }
-            }?.single()
+            }.firstOrNull()
         }
-        return true
+        return disableSafeModelTipMethod != null || safeModeTipClass != null
     }
 
     override fun init() {
-        disableSafeModelTipMethod.createHook {
+        disableSafeModelTipMethod?.createHook {
             replace { false }
         }
 
-        recyclerViewField.declaringClass.findMethod { name("a") }.createAfterHook {
-            it.thisObject.setBooleanField(recyclerViewField.name, false)
+        val targetClass = safeModeTipClass ?: findClassIfExists("com.miui.packageInstaller.ui.listcomponets.SafeModeTipViewObject")
+        if (targetClass != null) {
+            hookAllConstructors(targetClass, object : IMethodHook {
+                override fun after(param: HookParam) {
+                    var cls: Class<*>? = param.thisObject.javaClass
+                    while (cls != null && cls != Any::class.java) {
+                        for (field in cls.declaredFields) {
+                            if (!Modifier.isStatic(field.modifiers) && field.type == java.lang.Boolean.TYPE) {
+                                field.isAccessible = true
+                                field.setBoolean(param.thisObject, false)
+                            }
+                        }
+                        cls = cls.superclass
+                    }
+                }
+            })
+
+            hookAllMethods(targetClass, "D", object : IMethodHook {
+                override fun after(param: HookParam) {
+                    val holder = param.args.firstOrNull() ?: return
+                    val itemView = runCatching { BaseHook.getObjectField(holder, "itemView") as? View }.getOrNull() ?: return
+                    itemView.visibility = View.GONE
+                    itemView.layoutParams?.let { lp ->
+                        lp.height = 0
+                        itemView.layoutParams = lp
+                    }
+                }
+            })
         }
     }
 }

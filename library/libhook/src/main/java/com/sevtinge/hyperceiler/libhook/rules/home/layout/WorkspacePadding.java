@@ -32,17 +32,32 @@ import io.github.lingqiqi5211.ezhooktool.xposed.common.HookParam;
 
 public class WorkspacePadding extends HomeBaseHookNew {
 
-    Context mContext;
-    Class<?> mDeviceConfig;
+    private Context mContext;
+    private Class<?> mDeviceConfig;
+    private int mPaddingBottomPx;
+    private int mPaddingTopPx;
+    private int mPaddingHorizontalPx;
+
+    private void updatePaddings() {
+        if (mContext != null) {
+            mPaddingBottomPx = DisplayUtils.dp2px(mContext, PrefsBridge.getInt("home_layout_workspace_padding_bottom", 0));
+        } else {
+            mPaddingBottomPx = DisplayUtils.dp2px(PrefsBridge.getInt("home_layout_workspace_padding_bottom", 0));
+        }
+        mPaddingTopPx = DisplayUtils.dp2px(PrefsBridge.getInt("home_layout_workspace_padding_top", 0));
+        mPaddingHorizontalPx = DisplayUtils.dp2px(PrefsBridge.getInt("home_layout_workspace_padding_horizontal", 0));
+    }
 
     @Override
     public void initBase() {
         mDeviceConfig = findClassIfExists(getPackageVersionCode(getLpparam()) < 600000000 ? DEVICE_CONFIG_NEW : DEVICE_CONFIG_OLD);
+        updatePaddings();
 
         findAndHookMethod(mDeviceConfig, "Init", Context.class, boolean.class, new IMethodHook() {
             @Override
             public void before(HookParam param) {
                 mContext = (Context) param.getArgs()[0];
+                updatePaddings();
             }
         });
 
@@ -50,7 +65,7 @@ public class WorkspacePadding extends HomeBaseHookNew {
             findAndHookMethod(mDeviceConfig, "getWorkspaceCellPaddingBottom", new IMethodHook() {
                 @Override
                 public void before(HookParam param) {
-                    param.setResult(DisplayUtils.dp2px(mContext, PrefsBridge.getInt("home_layout_workspace_padding_bottom", 0)));
+                    param.setResult(mPaddingBottomPx);
                 }
             });
         }
@@ -61,14 +76,14 @@ public class WorkspacePadding extends HomeBaseHookNew {
                 findAndHookMethod(mDeviceConfig, "getWorkspaceCellPaddingTop", Context.class, new IMethodHook() {
                     @Override
                     public void before(HookParam param) {
-                        param.setResult(DisplayUtils.dp2px(PrefsBridge.getInt("home_layout_workspace_padding_top", 0)));
+                        param.setResult(mPaddingTopPx);
                     }
                 });
             } catch (Throwable t) {
                 findAndHookMethod(mDeviceConfig, "getWorkspaceCellPaddingTop", new IMethodHook() {
                     @Override
                     public void before(HookParam param) {
-                        param.setResult(DisplayUtils.dp2px(PrefsBridge.getInt("home_layout_workspace_padding_top", 0)));
+                        param.setResult(mPaddingTopPx);
                     }
                 });
             }
@@ -79,7 +94,7 @@ public class WorkspacePadding extends HomeBaseHookNew {
             findAndHookMethod(mDeviceConfig, "getWorkspaceCellPaddingSide", new IMethodHook() {
                 @Override
                 public void before(HookParam param) {
-                    param.setResult(DisplayUtils.dp2px(PrefsBridge.getInt("home_layout_workspace_padding_horizontal", 0)));
+                    param.setResult(mPaddingHorizontalPx);
                 }
             });
         }

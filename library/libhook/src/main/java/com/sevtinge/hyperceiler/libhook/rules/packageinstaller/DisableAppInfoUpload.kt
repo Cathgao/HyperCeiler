@@ -31,15 +31,15 @@ import java.util.stream.Collectors
 
 object DisableAppInfoUpload : BaseHook() {
     override fun useDexKit() = true
-    private lateinit var avlUploadInvokerList: List<Method>
-    private lateinit var interceptCheckInvokerList: List<Method>
-    private lateinit var infoLayoutInvokerList: List<Method>
+    private var avlUploadInvokerList: List<Method>? = null
+    private var interceptCheckInvokerList: List<Method>? = null
+    private var infoLayoutInvokerList: List<Method>? = null
 
     override fun initDexKit(): Boolean {
         /**
          * methods invoke api '/avl/upload/'
          */
-        avlUploadInvokerList = requiredMemberList("avlUploadInvokerList") {
+        avlUploadInvokerList = optionalMemberList("avlUploadInvokerList") {
             it.findMethod {
                 matcher {
                     paramCount(4)
@@ -58,7 +58,7 @@ object DisableAppInfoUpload : BaseHook() {
         /**
          * methods invoke api '/v4/game/interceptcheck/'
          */
-        interceptCheckInvokerList = requiredMemberList("interceptCheckInvokerList") {
+        interceptCheckInvokerList = optionalMemberList("interceptCheckInvokerList") {
             it.findMethod {
                 matcher {
                     paramCount(6)
@@ -78,7 +78,7 @@ object DisableAppInfoUpload : BaseHook() {
         /**
          * methods invoke api '/info/layout'
          */
-        infoLayoutInvokerList = requiredMemberList("infoLayoutInvokerList") {
+        infoLayoutInvokerList = optionalMemberList("infoLayoutInvokerList") {
             it.findMethod {
                 matcher {
                     paramCount(7)
@@ -94,7 +94,7 @@ object DisableAppInfoUpload : BaseHook() {
                 }
             }
         }
-        return true
+        return !avlUploadInvokerList.isNullOrEmpty() || !interceptCheckInvokerList.isNullOrEmpty() || !infoLayoutInvokerList.isNullOrEmpty()
     }
 
     override fun init() {
@@ -107,9 +107,10 @@ object DisableAppInfoUpload : BaseHook() {
      * after installing
      */
     private fun disableInvokeAvlUploadApi() {
-        logD("/avl/upload/", avlUploadInvokerList)
+        val list = avlUploadInvokerList ?: return
+        logD("/avl/upload/", list)
 
-        avlUploadInvokerList.forEach {
+        list.forEach {
             it.createHook {
                 replace { }
             }
@@ -117,9 +118,10 @@ object DisableAppInfoUpload : BaseHook() {
     }
 
     private fun disableInvokeInterceptCheckApi() {
-        logD("/interceptcheck", interceptCheckInvokerList)
+        val list = interceptCheckInvokerList ?: return
+        logD("/interceptcheck", list)
 
-        interceptCheckInvokerList.forEach {
+        list.forEach {
             it.createHook {
                 returnConstant(null)
             }
@@ -127,14 +129,15 @@ object DisableAppInfoUpload : BaseHook() {
     }
 
     private fun disableInvokeInfoLayoutApi() {
-        logD("/info/layout'", infoLayoutInvokerList)
+        val list = infoLayoutInvokerList ?: return
+        logD("/info/layout'", list)
 
-        infoLayoutInvokerList.forEach { method ->
+        list.forEach { method ->
             method.createHook {
-                if (method.returnType == Object::class.java) {
-                    returnConstant(null)
-                } else {
+                if (method.returnType == java.lang.Void.TYPE) {
                     replace { }
+                } else {
+                    returnConstant(null)
                 }
             }
         }

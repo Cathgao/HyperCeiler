@@ -48,119 +48,15 @@ import java.text.DecimalFormat
 import kotlin.math.roundToInt
 
 object DisplayMoreApkInfoNew : BaseHook() {
-    override fun useDexKit() = true
+    override fun useDexKit() = false
 
-    override fun initDexKit(): Boolean {
-        viewExcludeMethod2
-        viewExcludeMethod1
-        viewMethod
-        entryMethod
-        viewHolderField
-        return true
-    }
     private var mApkInfo: Class<*>? = null
     private var mAppInfoViewObject: Class<*>? = null
     private var mAppInfoViewObjectViewHolder: Class<*>? = null
 
-    private val viewExcludeMethod2 by lazy<Method> {
-        requiredMember("ViewExcludeMethod2") {
-            it.findClass {
-                matcher {
-                    addUsingString("context.ge…ta.versionName", StringMatchType.Contains)
-                }
-            }.findMethod {
-                matcher {
-                    modifiers = Modifier.PRIVATE or Modifier.FINAL
-                    returnType = "void"
-                    paramCount = 0
-                    addUsingNumber(1)
-                }
-            }.single()
-        }
-    }
-
-    private val viewExcludeMethod1 by lazy<Method> {
-        requiredMember("ViewExcludeMethod1") {
-            it.findClass {
-                matcher {
-                    addUsingString("context.ge…ta.versionName", StringMatchType.Contains)
-                }
-            }.findMethod {
-                matcher {
-                    modifiers = Modifier.PRIVATE or Modifier.FINAL
-                    returnType = "void"
-                    paramCount = 0
-                    addUsingString("")
-                }
-            }.single()
-        }
-    }
-
-    private val viewMethod by lazy<List<Method>> {
-        requiredMemberList("ViewMethod") {
-            it.findClass {
-                matcher {
-                    addUsingString("context.ge…ta.versionName", StringMatchType.Contains)
-                }
-            }.findMethod {
-                matcher {
-                    modifiers = Modifier.PRIVATE or Modifier.FINAL
-                    returnType = "void"
-                    paramCount = 0
-                }
-            }
-        }
-    }
-
-    private val entryMethod by lazy<Method> {
-        requiredMember("EntryMethod") {
-            it.findClass {
-                matcher {
-                    addUsingString("context.ge…ta.versionName", StringMatchType.Contains)
-                }
-            }.findMethod {
-                matcher {
-                    modifiers = Modifier.PUBLIC
-                    returnType = "void"
-                    paramTypes = listOf($$"com.miui.packageInstaller.ui.listcomponets.AppInfoViewObject$ViewHolder")
-                }
-            }.single()
-        }
-    }
-
-    private val viewHolderField by lazy<Field?> {
-        optionalMember("ViewHolder") { bridge ->
-            bridge.findClass {
-                matcher {
-                    addUsingString("context.ge…ta.versionName", StringMatchType.Contains)
-                }
-            }.findField {
-                matcher {
-                    type =
-                        $$"com.miui.packageInstaller.ui.listcomponets.AppInfoViewObject$ViewHolder"
-                    modifiers = Modifier.PRIVATE
-                }
-            }.singleOrNull()
-        }
-    }
-
     @SuppressLint("SetTextI18n")
     override fun init() {
-        if (viewHolderField == null) {
-            return
-        }
-
-        // pick the first view method that is not excluded
-        val reallyViewMethod: Method? = viewMethod.firstOrNull { it != viewExcludeMethod1 && it != viewExcludeMethod2 }
-
-        // if we have a specific view method, ensure entry calls it
-        reallyViewMethod?.let { method ->
-            entryMethod.createBeforeHook {
-                callMethod(method.name)
-            }
-        }
-
-        mApkInfo = findClass("com.miui.packageInstaller.model.ApkInfo")
+        mApkInfo = findClassIfExists("com.miui.packageInstaller.model.ApkInfo")
         mAppInfoViewObject = findClassIfExists("com.miui.packageInstaller.ui.listcomponets.AppInfoViewObject")
         if (mAppInfoViewObject == null) {
             XposedLog.e(TAG, "mAppInfoViewObject not found")
@@ -186,7 +82,7 @@ object DisplayMoreApkInfoNew : BaseHook() {
                 return
             }
 
-        val methodToHook = reallyViewMethod ?: candidateMethods[0]
+        val methodToHook = candidateMethods[0]
         XposedLog.d(
             TAG,
             this.lpparam.packageName,
@@ -194,11 +90,7 @@ object DisplayMoreApkInfoNew : BaseHook() {
         )
 
         methodToHook.createAfterHook { hookParam ->
-            val holderInstance: Any = if (reallyViewMethod != null) {
-                hookParam.thisObject.getObjectField(viewHolderField!!.name) ?: return@createAfterHook
-            } else {
-                hookParam.args[0] ?: return@createAfterHook
-            }
+            val holderInstance: Any = hookParam.args[0] ?: return@createAfterHook
 
             val mAppSizeTv = (holderInstance.callMethod("getTvAppVersion") as? TextView)
                 ?: (holderInstance.callMethod("getAppSize") as? TextView)
